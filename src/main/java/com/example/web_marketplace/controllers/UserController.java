@@ -6,6 +6,7 @@ import com.example.web_marketplace.service.UserService;
 
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,15 +36,14 @@ public class UserController {
     }
     @GetMapping("/get/user")
     public String getInfoSeller(@ModelAttribute("emailForm") EmailForm email){
-        return "account/userInfo";
+        return "account/email";
     }
 
     @PostMapping("/info/user")
-    public String infoOfSeller(@ModelAttribute("emailForm") @Valid EmailForm email,BindingResult bindingResult){
-        if(bindingResult.hasErrors())return "account/userInfo";
-        userService.infoOfUser(email.getEmail());
-        //retutn info
-        return "redirect:/api/main";
+    public String infoOfSeller(@ModelAttribute("emailForm") @Valid EmailForm email, BindingResult bindingResult, Model model){
+        if(bindingResult.hasErrors())return "account/email";
+        userService.infoOfUser(email.getEmail(),model);
+        return "account/userInfo";
     }
     @GetMapping("/main")
     public String mainPage(){

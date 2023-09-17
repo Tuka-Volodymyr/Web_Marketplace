@@ -7,7 +7,7 @@
 <body>
 <h1>Add new goods to service</h1>
 <form th:method="POST" th:action="@{/api/add/goods}" th:object="${goods}">
-    <label for="name">Enter goods name: </label>
+    <label for="name">Enter name of goods: </label>
     <input type="text" th:field="*{name}" id="name"/>
     <div style="color: brown" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</div>
 
@@ -27,7 +27,15 @@
     <div style="color: brown" th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Error</div>
 
     <br/>
+    <br/>
     <input type="submit" value="Add new goods!"/>
 </form>
+<br/>
+<button onclick="back()">Back</button>
+<script>
+    function back() {
+        window.location.href = 'http://localhost:1000/api/main';
+    }
+</script>
 </body>
 </html>

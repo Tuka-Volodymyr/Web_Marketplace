@@ -5,6 +5,7 @@ import com.example.web_marketplace.entities.User;
 import com.example.web_marketplace.exceptions.BadRequestException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 
 @Service
@@ -23,7 +24,8 @@ public class UserService {
         userData.save(user);
 
     }
-    public String infoOfUser(String email){
-        return userData.findByEmail(email).toString();
+    public void infoOfUser(String email, Model model){
+        model.addAttribute("user", userData.findByEmail(email));
+
     }
 }

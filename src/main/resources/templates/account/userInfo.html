@@ -2,18 +2,31 @@
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Info Seller</title>
+    <title>Title</title>
 </head>
 <body>
-<h1>Web Marketplace</h1>
-<form th:method="POST" th:action="@{/api/info/user}" th:object="${emailForm}">
+<h1>User details</h1>
+<div th:each="user : ${user}">
+
+
+    <label for="name">Name: </label>
+    <a th:text="${user.getFullName()}" id="name">User</a>
+
     <br/>
-    <label for="email">Enter email of user: </label>
-    <input type="text" th:field="*{email}" id="email"/>
-    <div style="color: brown" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Error</div>
+    <label for="email">Email: </label>
+    <a th:text="${user.getEmail()}" id="email">User</a>
+
     <br/>
-    <br/>
-    <input type="submit" value="Find user!"/>
-</form>
+    <label for="phone">Phone: </label>
+    <a th:text="${user.getPhone()}" id="phone">User</a>
+
+</div>
+<br/>
+<button onclick="back()">Back</button>
+<script>
+    function back() {
+        window.location.href = 'http://localhost:1000/api/main';
+    }
+</script>
 </body>
 </html>
