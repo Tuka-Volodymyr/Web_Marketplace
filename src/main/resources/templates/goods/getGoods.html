@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Your goods</h1>
+<div th:each="goods : ${goods}">
+
+    <br/>
+    <label for="id">Id: </label>
+    <a th:text="${goods.getId()}" id="id">Goods</a>
+
+    <br/>
+    <label for="name">Goods: </label>
+    <a th:text="${goods.getName()}" id="name">Goods</a>
+
+    <br/>
+    <label for="description">Description: </label>
+    <a th:text="${goods.getDescription()}" id="description">Goods</a>
+
+    <br/>
+    <label for="price">Price: </label>
+    <a th:text="${goods.getPrice()}" id="price">Goods</a>
+
+    <br/>
+    <label for="data">Data: </label>
+    <a th:text="${goods.getLocalDate()}" id="data">Goods</a>
+
+</div>
+<br/>
+<button onclick="back()">Back</button>
+<script>
+    function back() {
+        window.location.href = 'http://localhost:1000/api/main';
+    }
+</script>
+</body>
+</html>

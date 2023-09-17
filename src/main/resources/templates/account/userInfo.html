@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Info Seller</title>
+</head>
+<body>
+<h1>Web Marketplace</h1>
+<form th:method="POST" th:action="@{/api/info/user}" th:object="${emailForm}">
+    <br/>
+    <label for="email">Enter email of user: </label>
+    <input type="text" th:field="*{email}" id="email"/>
+    <div style="color: brown" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Error</div>
+    <br/>
+    <br/>
+    <input type="submit" value="Find user!"/>
+</form>
+</body>
+</html>

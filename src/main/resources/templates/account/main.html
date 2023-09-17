@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Account</title>
+</head>
+<body>
+<h1>Web Marketplace</h1>
+<button onclick="newGoods()">Add some goods</button>
+<br/>
+<br/>
+<button onclick="getUser()">User info</button>
+<br/>
+<br/>
+<button onclick="goods()">Your goods</button>
+<script>
+    function newGoods() {
+        window.location.href = 'http://localhost:1000/api/new/goods';
+    }
+    function getUser() {
+        window.location.href = 'http://localhost:1000/api/get/user';
+    }
+    function goods() {
+        window.location.href = 'http://localhost:1000/api/your/goods';
+    }
+</script>
+
+</body>
+</html>

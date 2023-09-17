@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+<h1>Web Marketplace</h1>
+<button onclick="login()">Sign in</button>
+<br/>
+<br/>
+<button onclick="register()">Sing up</button>
+<script>
+    function login() {
+        window.location.href = 'http://localhost:1000/login';
+    }
+    function register() {
+        window.location.href = 'http://localhost:1000/api/new/user';
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add goods</title>
+</head>
+<body>
+<h1>Add new goods to service</h1>
+<form th:method="POST" th:action="@{/api/add/goods}" th:object="${goods}">
+    <label for="name">Enter goods name: </label>
+    <input type="text" th:field="*{name}" id="name"/>
+    <div style="color: brown" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</div>
+
+    <br/>
+    <label for="description">Enter description of goods: </label>
+    <input type="text" th:field="*{description}" id="description"/>
+    <div style="color: brown" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Error</div>
+
+    <br/>
+    <label for="category">Enter category of goods: </label>
+    <input type="text" th:field="*{category}" id="category"/>
+    <div style="color: brown" th:if="${#fields.hasErrors('category')}" th:errors="*{category}">Error</div>
+
+    <br/>
+    <label for="price">Enter price of goods: </label>
+    <input type="number" th:field="*{price}" id="price"/>
+    <div style="color: brown" th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Error</div>
+
+    <br/>
+    <input type="submit" value="Add new goods!"/>
+</form>
+</body>
+</html>
