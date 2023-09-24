@@ -33,14 +33,14 @@ public class SecurityConfiguration{
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf().disable()
                 .authorizeHttpRequests(auth->auth
-
-//                        .requestMatchers("/api/**").authenticated())
-                        .requestMatchers("/api/new/user","/api/add/user","/api/login","/error/**").permitAll()
+                        .requestMatchers("/","/new/user","/add/user",
+                                "/login","/error/**","/send/code",
+                                "/check/code","/change/password","/get/send/code",
+                                "/get/check/code","/get/change/password").permitAll()
                         .anyRequest().authenticated())
-
                 .formLogin(form -> form
-//                        .loginPage("/api/login")
-                        .defaultSuccessUrl("/api/main", true))
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/main", true))
                 .httpBasic(Customizer.withDefaults())
                 .build();
     }
