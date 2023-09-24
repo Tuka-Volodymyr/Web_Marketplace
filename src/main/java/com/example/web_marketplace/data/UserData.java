@@ -1,6 +1,7 @@
 package com.example.web_marketplace.data;
 
 import com.example.web_marketplace.entities.User;
+import com.example.web_marketplace.exceptions.BadRequestException;
 import com.example.web_marketplace.exceptions.UserNotFoundException;
 import com.example.web_marketplace.repositories.UserRepository;
 import org.springframework.stereotype.Component;
@@ -25,8 +26,11 @@ public class UserData {
         return sellerOptional.isPresent();
     }
     public User findByEmail(String email){
+        if(!isExist(email))throw new BadRequestException(
+                "Email don`t exist"
+        );
         return userRepository
                 .findByEmailIgnoreCase(email)
-                .orElseThrow(UserNotFoundException::new);
+                .orElseThrow();
     }
 }
