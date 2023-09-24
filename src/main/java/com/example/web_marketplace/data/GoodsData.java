@@ -1,5 +1,6 @@
 package com.example.web_marketplace.data;
 
+import com.example.web_marketplace.dto.FilterForm;
 import com.example.web_marketplace.entities.Goods;
 import com.example.web_marketplace.exceptions.GoodsNotFoundException;
 import com.example.web_marketplace.repositories.GoodsRepository;
@@ -21,9 +22,31 @@ public class GoodsData implements Data{
                 .findByNameAndUserEmail(name,email)
                 .orElseThrow(GoodsNotFoundException::new);
     }
-    public List<Goods> findByCategory(String category){
-        return goodsRepository.findByCategory(category);
+    public List<Goods> findByMinPrice(long price){
+        return goodsRepository.findByPriceGreaterThanEqual(price);
     }
+//    public List<Goods> findByMaxPrice(long price){
+//        return goodsRepository.findByPriceLessThanEqual(price);
+//    }
+    public List<Goods> findByMinPriceAndMax(FilterForm filterForm){
+        return goodsRepository.findByPriceGreaterThanEqualAndPriceLessThanEqual(filterForm.getMinPrice(),filterForm.getMaxPrice());
+    }
+    public List<Goods> findByMinPriceAndCategory(FilterForm filter){
+        return goodsRepository
+                .findByCategoryAndPriceGreaterThanEqual(filter.getCategory(),filter.getMinPrice());
+    }
+//    public List<Goods> findByMaxPriceAndCategory(FilterForm filter){
+//        return goodsRepository
+//                .findByCategoryAndPriceLessThanEqual(filter.getCategory(),filter.getMinPrice());
+//    }
+
+    public List<Goods> findByMinPriceAndCategoryAndMaxPrice(FilterForm filter){
+        return goodsRepository
+                .findByCategoryAndPriceGreaterThanEqualAndPriceLessThanEqual(filter.getCategory(),filter.getMinPrice(),filter.getMaxPrice());
+    }
+//    public List<Goods> findByCategory(String category){
+//        return goodsRepository.findByCategory(category);
+//    }
     public List<Goods> findByEmail(String email){
         return goodsRepository.findByUserEmail(email);
     }

@@ -2,6 +2,7 @@ package com.example.web_marketplace.service;
 
 import com.example.web_marketplace.data.GoodsData;
 import com.example.web_marketplace.data.UserData;
+import com.example.web_marketplace.dto.FilterForm;
 import com.example.web_marketplace.entities.Goods;
 import com.example.web_marketplace.entities.User;
 
@@ -12,7 +13,6 @@ import org.springframework.ui.Model;
 
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Service
 public class GoodsService {
@@ -34,14 +34,26 @@ public class GoodsService {
         goodsData.delete(goodsData.findByNameAndSellerID(name,userDetails.getUsername()));
         return name+" was deleted!";
     }
-    public List<Goods> getGoods(String category){
-        if(category==null)return goodsData.findAll();
-        return goodsData.findByCategory(category);
+    public void getGoods(Model model){
+       model.addAttribute("goods",goodsData.findAll());
     }
-    public Model getYourGoods(Model model){
+    public void getYourGoods(Model model){
         UserDetails userDetails=getUserDetails();
-        return model.addAttribute("goods",goodsData.findByEmail(userDetails.getUsername()));
+        model.addAttribute("goods",goodsData.findByEmail(userDetails.getUsername()));
     }
+    public void getFoundGoodsWithFilter(Model model, FilterForm filter){
+        if (!filter.getCategory().isBlank() && filter.getMaxPrice()> filter.getMinPrice()) {
+            model.addAttribute("goods",goodsData.findByMinPriceAndCategoryAndMaxPrice(filter));
+        }else if (!filter.getCategory().isBlank() ) {
+            model.addAttribute("goods", goodsData.findByMinPriceAndCategory(filter));
+        } else if (filter.getMaxPrice() > filter.getMinPrice()) {
+            model.addAttribute("goods",goodsData.findByMinPriceAndMax(filter));
+        }else if (filter.getMinPrice() > 0){
+            model.addAttribute("goods",goodsData.findByMinPrice(filter.getMinPrice()));
+
+        }
+    }
+
 
     private UserDetails getUserDetails() {
         return (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
