@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+<h1>Log In</h1>
+<form th:action="@{/login}" method="POST">
+    <div>
+        <label for="username">Username: </label>
+        <input type="text" id="username" name="username" required>
+    </div>
+    <br/>
+    <div>
+        <label for="password">Password: </label>
+        <input type="password" id="password" name="password" required>
+    </div>
+    <div style="color:red" th:if="${param.error}">Invalid username or password</div>
+    <br/>
+    <div>
+        <button type="submit">Login</button>
+    </div>
+</form>
+
+<br/>
+<button onclick="changePass()">Forgot password</button>
+<br/>
+<br/>
+<button onclick="back()">Back</button>
+<script>
+    function changePass() {
+        window.location.href = 'http://localhost:1000/get/send/code';
+    }
+    function back() {
+        window.location.href = 'http://localhost:1000/';
+    }
+</script>
+</body>
+</html>

@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>Add new goods to service</h1>
-<form th:method="POST" th:action="@{/api/add/goods}" th:object="${goods}">
+<form th:method="POST" th:action="@{/add/goods}" th:object="${goods}">
     <label for="name">Enter name of goods: </label>
     <input type="text" th:field="*{name}" id="name"/>
     <div style="color: brown" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</div>
@@ -34,7 +34,7 @@
 <button onclick="back()">Back</button>
 <script>
     function back() {
-        window.location.href = 'http://localhost:1000/api/main';
+        window.location.href = 'http://localhost:1000/goods';
     }
 </script>
 </body>

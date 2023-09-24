@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>Your goods</h1>
-<div th:each="goods : ${goods}">
+    <div th:each="goods : ${goods}">
 
     <br/>
     <label for="id">Id: </label>
@@ -33,7 +33,7 @@
 <button onclick="back()">Back</button>
 <script>
     function back() {
-        window.location.href = 'http://localhost:1000/api/main';
+        window.location.href = 'http://localhost:1000/goods';
     }
 </script>
 </body>

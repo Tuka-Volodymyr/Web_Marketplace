@@ -5,24 +5,43 @@
     <title>Registration</title>
 </head>
 <body>
-<form th:method="POST" th:action="@{/api/add/user}" th:object="${user}">
+<h1>Welcome to WebMarketplace</h1>
+<form th:method="POST" th:action="@{/add/user}" th:object="${user}">
+
     <label for="fullName">Enter full name: </label>
     <input type="text" th:field="*{fullName}" id="fullName"/>
     <div style="color: brown" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}">Error</div>
+
+    <br/>
     <br/>
     <label for="email">Enter email: </label>
     <input type="text" th:field="*{email}" id="email"/>
     <div style="color: brown" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Error</div>
+
+    <br/>
     <br/>
     <label for="password">Enter password: </label>
     <input type="text" th:field="*{password}" id="password"/>
     <div style="color: brown" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Error</div>
+
+    <br/>
     <br/>
     <label for="phone">Enter phone: </label>
     <input type="text" th:field="*{phone}" id="phone"/>
     <div style="color: brown" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}">Error</div>
+    <div th:if="${error}" style="color:brown" th:text="${error}"></div>
+
+    <br/>
     <br/>
     <input type="submit" value="Create!"/>
 </form>
+<br/>
+<br/>
+<button onclick="back()">Back</button>
+<script>
+    function back() {
+        window.location.href = 'http://localhost:1000/';
+    }
+</script>
 </body>
 </html>

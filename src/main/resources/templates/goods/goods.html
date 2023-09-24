@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Account</title>
+</head>
+<body>
+<h1>Goods</h1>
+
+
+
+<button onclick="newGoods()">Add some goods</button>
+<br/>
+<br/>
+<button onclick="yourGoods()">Your goods</button>
+<br/>
+<br/>
+<button onclick="goods()">Filter goods</button>
+
+
+
+
+<div th:each="goods : ${goods}">
+
+    <br/>
+    <label for="name">Goods: </label>
+    <a th:text="${goods.getName()}" id="name">Goods</a>
+
+    <br/>
+    <label for="description">Description: </label>
+    <a th:text="${goods.getDescription()}" id="description">Goods</a>
+
+    <br/>
+    <label for="price">Price: </label>
+    <a th:text="${goods.getPrice()}" id="price">Goods</a>
+
+    <br/>
+    <label for="data">Data: </label>
+    <a th:text="${goods.getLocalDate()}" id="data">Goods</a>
+
+    <br/>
+    <label for="email">Seller email: </label>
+    <a th:text="${goods.getUserEmail()}" id="email">Goods</a>
+
+</div>
+<br/>
+<br/>
+<button onclick="back()">Back</button>
+<script>
+    function newGoods() {
+        window.location.href = 'http://localhost:1000/new/goods';
+    }
+    function yourGoods() {
+        window.location.href = 'http://localhost:1000/your/goods';
+    }
+    function goods() {
+        window.location.href = 'http://localhost:1000/find/goods';
+    }
+    function back() {
+        window.location.href = 'http://localhost:1000/main';
+    }
+</script>
+</body>
+</html>

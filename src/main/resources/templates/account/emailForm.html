@@ -6,11 +6,12 @@
 </head>
 <body>
 <h1>Web Marketplace</h1>
-<form th:method="POST" th:action="@{/api/info/user}" th:object="${emailForm}">
+<form th:method="POST" th:action="@{/info/user}" th:object="${emailForm}">
     <br/>
     <label for="email">Enter email of user: </label>
     <input type="text" th:field="*{email}" id="email"/>
     <div style="color: brown" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Error</div>
+    <div th:if="${error}" style="color:brown" th:text="${error}">Error</div>
     <br/>
     <br/>
     <input type="submit" value="Find user"/>
@@ -19,7 +20,7 @@
 <button onclick="back()">Back</button>
 <script>
     function back() {
-        window.location.href = 'http://localhost:1000/api/main';
+        window.location.href = 'http://localhost:1000/main';
     }
 </script>
 </body>

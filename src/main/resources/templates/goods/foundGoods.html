@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Found goods</title>
+</head>
+<body>
+<h1>Filter</h1>
+<form th:method="POST" th:action="@{/get/found/goods}" th:object="${filterForm}">
+    <br/>
+    <label for="category">Enter category of goods: </label>
+    <input type="text" th:field="*{category}" id="category"/>
+    <br/>
+    <br/>
+    <label for="minPrice">Enter min price of goods: </label>
+    <input type="number" th:field="*{minPrice}" id="minPrice" value="0"/>
+    <br/>
+    <br/>
+    <label for="maxPrice">Enter max price of goods: </label>
+    <input value="349856412" type="number" th:field="*{maxPrice}" id="maxPrice" />
+    <br/>
+    <br/>
+    <input type="submit" value="Find goods"/>
+</form>
+</body>
+</html>
