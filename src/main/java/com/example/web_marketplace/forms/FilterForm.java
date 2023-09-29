@@ -1,4 +1,4 @@
-package com.example.web_marketplace.dto;
+package com.example.web_marketplace.forms;
 
 import lombok.Data;
 
