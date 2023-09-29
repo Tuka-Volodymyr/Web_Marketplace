@@ -8,9 +8,20 @@ import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 @Component
-public class CodeData {
-    @Autowired
-    private CodeRepository sentCodeInfoRepository;
+public class CodeData implements Data<Code>{
+    private final CodeRepository sentCodeInfoRepository;
+
+    public CodeData(CodeRepository sentCodeInfoRepository) {
+        this.sentCodeInfoRepository = sentCodeInfoRepository;
+    }
+    @Override
+    public void save(Code sentCode){
+        sentCodeInfoRepository.save(sentCode);
+    }
+    @Override
+    public void delete(Code code){
+        sentCodeInfoRepository.delete(code);
+    }
     public Optional<Code> findCodeByAccountId(long userId){
         return sentCodeInfoRepository.findByUserId(userId);
     }
@@ -18,10 +29,5 @@ public class CodeData {
         Optional<Code> cod = sentCodeInfoRepository.findByCode(code);
         if (cod.isEmpty())throw new BadRequestException("Code is wrong");
     }
-    public void saveCode(Code sentCode){
-        sentCodeInfoRepository.save(sentCode);
-    }
-    public void deleteCode(Code code){
-        sentCodeInfoRepository.delete(code);
-    }
+
 }
