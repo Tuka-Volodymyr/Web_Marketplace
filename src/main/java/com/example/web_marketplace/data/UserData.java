@@ -9,22 +9,25 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 @Component
-public class UserData {
+public class UserData implements Data<User>{
     private final UserRepository userRepository;
-
     public UserData(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
+    @Override
     public void save(User user) {
         userRepository.save(user);
     }
+    @Override
     public void delete(User user) {
         userRepository.save(user);
     }
+
     public boolean isExist(String email){
         Optional<User> sellerOptional= userRepository.findByEmailIgnoreCase(email);
         return sellerOptional.isPresent();
     }
+
     public User findByEmail(String email){
         if(!isExist(email))throw new BadRequestException(
                 "Email don`t exist"
