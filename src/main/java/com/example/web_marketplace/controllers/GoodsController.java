@@ -1,9 +1,12 @@
 package com.example.web_marketplace.controllers;
 
-import com.example.web_marketplace.dto.FilterForm;
+import com.example.web_marketplace.entities.User;
+import com.example.web_marketplace.forms.FilterForm;
+import com.example.web_marketplace.forms.IdGoods;
 import com.example.web_marketplace.entities.Goods;
 import com.example.web_marketplace.service.GoodsService;
 import jakarta.validation.Valid;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,7 +20,6 @@ public class GoodsController {
         this.goodsService = goodsService;
     }
 
-    //make general goods html and  get new good , delete ,your goods,all goods ADD sort
     @GetMapping("/new/goods")
     public String newCommodity(@ModelAttribute("goods") Goods goods){
         return "goods/addGoods";
@@ -29,10 +31,21 @@ public class GoodsController {
         goodsService.addGoods(goods);
         return "redirect:/goods";
     }
-//    @DeleteMapping("/delete/goods")
-//    public ResponseEntity<?> deleteCommodity(@RequestParam String name){
-//        return new ResponseEntity<>(goodsService.deleteGoods(name),HttpStatus.OK);
-//    } in my goods
+    @GetMapping("/get/delete/goods")
+    public String getDeleteCommodity(@ModelAttribute("idGoods") IdGoods idGoods){
+        return "goods/deleteGoods";
+    }
+    @PostMapping("/delete/goods")
+    public String deleteCommodity(@ModelAttribute("idGoods") IdGoods idGoods,Model model){
+        try {
+            goodsService.deleteGoods(idGoods.getIdGoods());
+            return "redirect:/your/goods";
+        }catch (Exception e){
+            model.addAttribute("error",e.getMessage());
+            return "goods/deleteGoods";
+        }
+
+    }
     @GetMapping("/your/goods")
     public String getYourGoods(Model model){
         goodsService.getYourGoods(model);
@@ -45,9 +58,14 @@ public class GoodsController {
 
     @PostMapping("get/found/goods")
     public String getCommodityByCategory(@ModelAttribute("filterForm") FilterForm filterForm, Model model){
-        if(filterForm.getCategory().isBlank()&&filterForm.getMaxPrice()<=filterForm.getMinPrice())
+        if(filterForm.getCategory().isBlank()&&filterForm.getMaxPrice()<=filterForm.getMinPrice()&&filterForm.getMaxPrice()!=0)
             return "redirect:/goods";
         goodsService.getFoundGoodsWithFilter(model, filterForm);
+        return "goods/goods";
+    }
+    @GetMapping("/get/sortGoods/decrease")
+    public String getSortGoodsDecrease(Model model){
+        goodsService.getSortDecreaseByPrice(model);
         return "goods/goods";
     }
     @GetMapping("/goods")
