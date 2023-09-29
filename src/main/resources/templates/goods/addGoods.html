@@ -12,15 +12,18 @@
     <div style="color: brown" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</div>
 
     <br/>
+    <br/>
     <label for="description">Enter description of goods: </label>
     <input type="text" th:field="*{description}" id="description"/>
     <div style="color: brown" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Error</div>
 
     <br/>
+    <br/>
     <label for="category">Enter category of goods: </label>
     <input type="text" th:field="*{category}" id="category"/>
     <div style="color: brown" th:if="${#fields.hasErrors('category')}" th:errors="*{category}">Error</div>
 
+    <br/>
     <br/>
     <label for="price">Enter price of goods: </label>
     <input type="number" th:field="*{price}" id="price"/>
@@ -34,7 +37,7 @@
 <button onclick="back()">Back</button>
 <script>
     function back() {
-        window.location.href = 'http://localhost:1000/goods';
+        window.location.href = 'https://localhost:1000/goods';
     }
 </script>
 </body>

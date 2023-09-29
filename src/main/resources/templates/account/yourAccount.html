@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Account</title>
+</head>
+<body>
+
+
+<h1>Info</h1>
+
+
+
+<div th:each="user : ${user}">
+
+
+    <label for="name">Your name: </label>
+    <a th:text="${user.getFullName()}" id="name">User</a>
+
+    <br/>
+    <label for="email">Your email: </label>
+    <a th:text="${user.getEmail()}" id="email">User</a>
+
+    <br/>
+    <label for="phone">Your phone num: </label>
+    <a th:text="${user.getPhone()}" id="phone">User</a>
+
+</div>
+<br/>
+<br/>
+<button onclick="accountSettings()">Account settings</button>
+<br/>
+<br/>
+
+<button onclick="yourGoods()">Your goods</button>
+<br/>
+<br/>
+<button onclick="back()">Back</button>
+<script>
+    function back() {
+        window.location.href = 'https://localhost:1000/goods';
+    }
+    function yourGoods() {
+        window.location.href = 'https://localhost:1000/your/goods';
+    }
+    function accountSettings() {
+        // window.location.href = 'https://localhost:1000/get/send/code';
+    }
+
+
+</script>
+</body>
+</html>

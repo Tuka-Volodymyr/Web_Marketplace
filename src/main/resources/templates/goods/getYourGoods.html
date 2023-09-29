@@ -6,34 +6,56 @@
 </head>
 <body>
 <h1>Your goods</h1>
-    <div th:each="goods : ${goods}">
 
-    <br/>
-    <label for="id">Id: </label>
-    <a th:text="${goods.getId()}" id="id">Goods</a>
 
-    <br/>
-    <label for="name">Goods: </label>
-    <a th:text="${goods.getName()}" id="name">Goods</a>
-
-    <br/>
-    <label for="description">Description: </label>
-    <a th:text="${goods.getDescription()}" id="description">Goods</a>
-
-    <br/>
-    <label for="price">Price: </label>
-    <a th:text="${goods.getPrice()}" id="price">Goods</a>
-
-    <br/>
-    <label for="data">Data: </label>
-    <a th:text="${goods.getLocalDate()}" id="data">Goods</a>
-
-</div>
+<button onclick="newGoods()">Add some goods</button>
+<br/>
+<br/>
+<button onclick="deleteGoods()">Delete goods</button>
+<br/>
 <br/>
 <button onclick="back()">Back</button>
+    <div th:each="goods : ${goods}">
+
+        <br/>
+        <label for="id">Id: </label>
+        <a th:text="${goods.getId()}" id="id">Goods</a>
+
+        <br/>
+        <label for="name">Goods: </label>
+        <a th:text="${goods.getName()}" id="name">Goods</a>
+
+        <br/>
+        <label for="description">Description: </label>
+        <a th:text="${goods.getDescription()}" id="description">Goods</a>
+
+        <br/>
+        <label for="category">Category: </label>
+        <a th:text="${goods.getCategory()}" id="category">Goods</a>
+
+
+        <br/>
+        <label for="price">Price: </label>
+        <a th:text="${goods.getPrice()}" id="price">Goods</a>
+
+        <br/>
+        <label for="data">Data: </label>
+        <a th:text="${goods.getLocalDate()}" id="data">Goods</a>
+
+
+    </div>
+<br/>
+
+
 <script>
     function back() {
-        window.location.href = 'http://localhost:1000/goods';
+        window.location.href = 'https://localhost:1000/goods';
+    }
+    function deleteGoods() {
+        window.location.href = 'https://localhost:1000/get/delete/goods';
+    }
+    function newGoods() {
+        window.location.href = 'https://localhost:1000/new/goods';
     }
 </script>
 </body>
