@@ -2,51 +2,110 @@
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Seller info</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+
+        h1 {
+            font-size: 36px;
+            color: #333;
+        }
+
+        .info-container {
+            text-align: left;
+            margin: 10px auto;
+            max-width: 600px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        .info-container div {
+            margin-bottom: 10px;
+        }
+
+        .info-container label {
+            font-weight: bold;
+            width: 150px;
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        .info-container a {
+            text-decoration: none;
+            color: #007BFF;
+        }
+
+        .info-container a:hover {
+            text-decoration: underline;
+        }
+
+        button {
+            font-size: 16px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
 <h1>Seller info</h1>
-<div th:each="user : ${user}">
 
+<div th:each="user : ${user}" class="info-container">
+    <div>
+        <label>Name:</label>
+        <a th:text="${user.getFullName()}">User</a>
+    </div>
 
-    <label for="name">Name: </label>
-    <a th:text="${user.getFullName()}" id="name">User</a>
+    <div>
+        <label>Email:</label>
+        <a th:text="${user.getEmail()}">User</a>
+    </div>
 
-    <br/>
-    <label for="email">Email: </label>
-    <a th:text="${user.getEmail()}" id="email">User</a>
-
-    <br/>
-    <label for="phone">Phone: </label>
-    <a th:text="${user.getPhone()}" id="phone">User</a>
-
+    <div>
+        <label>Phone:</label>
+        <a th:text="${user.getPhone()}">User</a>
+    </div>
 </div>
-<br/>
-<br/>
+
 <h2>All goods</h2>
-<div th:each="goods : ${goods}">
 
-    <br/>
-    <label for="nameGoods">Goods: </label>
-    <a th:text="${goods.getName()}" id="nameGoods">Goods</a>
+<div th:each="goods : ${goods}" class="info-container">
+    <div>
+        <label>Goods:</label>
+        <a th:text="${goods.getName()}">Goods</a>
+    </div>
 
-    <br/>
-    <label for="description">Description: </label>
-    <a th:text="${goods.getDescription()}" id="description">Goods</a>
+    <div>
+        <label>Description:</label>
+        <a th:text="${goods.getDescription()}">Goods</a>
+    </div>
 
-    <br/>
-    <label for="price">Price: </label>
-    <a th:text="${goods.getPrice()}" id="price">Goods</a>
+    <div>
+        <label>Price:</label>
+        <a th:text="${goods.getPrice()}">Goods</a>
+    </div>
 
-    <br/>
-    <label for="data">Data: </label>
-    <a th:text="${goods.getLocalDate()}" id="data">Goods</a>
-
-
-
+    <div>
+        <label>Data:</label>
+        <a th:text="${goods.getLocalDate()}">Goods</a>
+    </div>
 </div>
-<br/>
+
 <button onclick="back()">Back</button>
+
 <script>
     function back() {
         window.location.href = 'https://localhost:1000/main';

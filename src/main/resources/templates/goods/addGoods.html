@@ -3,42 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <title>Add goods</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+
+        h1 {
+            font-size: 36px;
+            color: #333;
+        }
+
+        .label-input {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 10px 0;
+        }
+
+        .label-input label {
+            flex: 1;
+            margin-right: 10px;
+            text-align: right;
+        }
+
+        .label-input input {
+            flex: 2;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            font-size: 16px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        div.error {
+            color: brown;
+        }
+
+        button {
+            font-size: 16px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+    </style>
 </head>
 <body>
 <h1>Add new goods to service</h1>
 <form th:method="POST" th:action="@{/add/goods}" th:object="${goods}">
     <label for="name">Enter name of goods: </label>
     <input type="text" th:field="*{name}" id="name"/>
-    <div style="color: brown" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</div>
+    <div class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</div>
 
     <br/>
     <br/>
     <label for="description">Enter description of goods: </label>
     <input type="text" th:field="*{description}" id="description"/>
-    <div style="color: brown" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Error</div>
+    <div class="error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Error</div>
 
     <br/>
     <br/>
     <label for="category">Enter category of goods: </label>
     <input type="text" th:field="*{category}" id="category"/>
-    <div style="color: brown" th:if="${#fields.hasErrors('category')}" th:errors="*{category}">Error</div>
+    <div class="error" th:if="${#fields.hasErrors('category')}" th:errors="*{category}">Error</div>
 
     <br/>
     <br/>
     <label for="price">Enter price of goods: </label>
     <input type="number" th:field="*{price}" id="price"/>
-    <div style="color: brown" th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Error</div>
+    <div class="error" th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Error</div>
 
-    <br/>
+
     <br/>
     <input type="submit" value="Add new goods!"/>
 </form>
 <br/>
-<button onclick="back()">Back</button>
-<script>
-    function back() {
-        window.location.href = 'https://localhost:1000/goods';
-    }
-</script>
+<!--<button onclick="back()">Back</button>-->
+<!--<script>-->
+<!--    function back() {-->
+<!--        window.location.href = 'https://localhost:1000/goods';-->
+<!--    }-->
+<!--</script>-->
 </body>
 </html>

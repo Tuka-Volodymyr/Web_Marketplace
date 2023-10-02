@@ -1,52 +1,121 @@
 <!DOCTYPE html>
-<html lang="en">
+    <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Account</title>
+    <style>
+        form {
+            margin: 10px 0;
+        }
+
+        /* Стилізація прихованого поля */
+        input[type="hidden"] {
+            display: none; /* Сховати приховане поле */
+        }
+
+        /* Стилізація кнопки Submit */
+        input[type="submit"] {
+            font-size: 16px;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #218838;
+        }
+        h1 {
+            font-size: 36px;
+            color: #333;
+            text-align: center;
+        }
+
+        /* Стилізація кнопок */
+        button {
+            font-size: 16px;
+            padding: 10px 20px;
+            margin: 5px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Стилізація посилань та елементів форм */
+        label, a, input {
+
+            margin-bottom: 5px;
+        }
+        .item {
+            margin-bottom: 10px;
+        }
+
+        .key {
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .value {
+            font-style: normal;
+        }
+
+        /* Стилізація посилань */
+
+    </style>
 </head>
 <body>
 <h1>Goods</h1>
 
+<button onclick="goods()" style="margin-bottom: 10px;">Filter goods</button>
 
-
-
-<button onclick="goods()">Filter goods</button>
-
-<!--<button onclick="sortDecrease()">Price decrease</button>-->
-
+<button onclick="basket()" style="margin-bottom: 10px;">Basket</button>
 
 
 
 <div th:each="goods : ${goods}">
-
     <br/>
-    <label for="name">Goods: </label>
-    <a th:text="${goods.getName()}" id="name">Goods</a>
-
-    <br/>
-    <label for="description">Description: </label>
-    <a th:text="${goods.getDescription()}" id="description">Goods</a>
-
-    <br/>
-    <label for="price">Price: </label>
-    <a th:text="${goods.getPrice()}" id="price">Goods</a>
-
-    <br/>
-    <label for="data">Data: </label>
-    <a th:text="${goods.getLocalDate()}" id="data">Goods</a>
-
-    <br/>
-    <label for="email">Seller email:     </label>
-    <a th:text="${goods.getUserEmail()}" id="email">Goods</a>
-
+    <div class="item">
+        <span class="key">Goods:</span>
+        <span class="value" th:text="${goods.getName()}"></span>
+    </div>
+    <div class="item">
+        <span class="key">Description:</span>
+        <span class="value" th:text="${goods.getDescription()}"></span>
+    </div>
+    <div class="item">
+        <span class="key">Category:</span>
+        <span class="value" th:text="${goods.getCategory()}"></span>
+    </div>
+    <div class="item">
+        <span class="key">Price:</span>
+        <span class="value" th:text="${goods.getPrice()}"></span>
+    </div>
+    <div class="item">
+        <span class="key">Data:</span>
+        <span class="value" th:text="${goods.getLocalDate()}"></span>
+    </div>
+    <div class="item">
+        <span class="key">Seller email:</span>
+        <span class="value" th:text="${goods.getUserEmail()}"></span>
+    </div>
+    <form th:method="GET" th:action="@{/get/buy/menu}">
+        <input type="hidden" name="idGoods" th:value="${goods.idGood}" />
+        <input type="submit" value="Buy" />
+    </form>
 </div>
 <br/>
 <br/>
 <button onclick="back()">Back</button>
 <script>
 
-    function sortDecrease() {
-        window.location.href = 'https://localhost:1000/get/sortGoods/decrease';
+    function basket() {
+        window.location.href = 'https://localhost:1000/get/basket';
     }
     function goods() {
         window.location.href = 'https://localhost:1000/find/goods';
@@ -54,6 +123,10 @@
     function back() {
         window.location.href = 'https://localhost:1000/main';
     }
+    function yourGoods() {
+        window.location.href = 'https://localhost:1000/your/goods';
+    }
+
 </script>
 </body>
 </html>

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Your Goods</title>
+    <title>Menu</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -17,39 +17,68 @@
 
         label {
             font-weight: bold;
-            display: inline-block;
-            width: 150px;
+            display: block;
+            margin: 10px 0;
         }
 
-        .goods-container {
-            margin-top: 20px;
-            text-align: left;
-            border: 1px solid #ccc;
-            padding: 10px;
-            max-width: 500px;
-            margin: 0 auto;
+        a {
+            color: #007BFF;
+            text-decoration: none;
         }
 
-        .goods-container div {
-            margin-bottom: 10px;
-        }
-
-        .goods-container span {
-            color: #333;
-        }
-
-        .goods-container form {
-            margin-top: 10px;
-        }
-
-        .error-message {
-            color: brown;
+        a:hover {
+            text-decoration: underline;
         }
 
         button {
             font-size: 16px;
             padding: 10px 20px;
-            margin: 10px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: left;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        .container div {
+            margin-bottom: 10px;
+        }
+
+        .container div:last-child {
+            margin-bottom: 0;
+        }
+
+        .container div label {
+            width: 150px;
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        .container div span {
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        .container form {
+            margin-top: 10px;
+        }
+
+        .container input[type="submit"] {
+            font-size: 16px;
+            padding: 10px 20px;
             background-color: #007BFF;
             color: #fff;
             border: none;
@@ -57,33 +86,15 @@
             transition: background-color 0.3s;
         }
 
-        button:hover {
+        .container input[type="submit"]:hover {
             background-color: #0056b3;
-        }
-        .goods-container form {
-            margin-top: 10px;
-        }
-
-        .delete-button {
-            background-color: #dc3545; /* Червоний колір */
-            color: #fff;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .delete-button:hover {
-            background-color: #c82333; /* Темно-червоний колір при наведенні */
         }
     </style>
 </head>
 <body>
-<h1>Your Goods</h1>
+<h1>Good</h1>
 
-<button onclick="newGoods()">Add Goods</button>
-<br/>
-
-<div th:each="goods : ${goods}" class="goods-container">
+<div th:each="goods : ${goods}" class="container">
     <div>
         <label>Goods:</label>
         <span th:text="${goods.getName()}"></span>
@@ -109,28 +120,18 @@
         <span th:text="${goods.getLocalDate()}"></span>
     </div>
 
-    <form th:method="POST" th:action="@{/delete/goods}">
+    <div>
+        <label>Seller email:</label>
+        <span th:text="${goods.getUserEmail()}"></span>
+    </div>
+
+    <form th:method="GET" th:action="@{/get/add/to/basket}">
         <input type="hidden" name="idGoods" th:value="${goods.idGood}" />
-        <div th:if="${error}" class="error-message" th:text="${error}"></div>
         <br/>
-        <input type="submit" value="Delete" class="delete-button"/> <!-- Додано клас delete-button -->
+        <input type="submit" value="Add to basket"/>
     </form>
 </div>
 
-<br/>
-<br/>
-<!--<button onclick="back()">Back</button>-->
 
-<script>
-    // function back() {
-    //     window.location.href = 'https://localhost:1000/get/account';
-    // }
-
-    function newGoods() {
-        window.location.href = 'https://localhost:1000/new/goods';
-    }
-</script>
 </body>
 </html>
-
-

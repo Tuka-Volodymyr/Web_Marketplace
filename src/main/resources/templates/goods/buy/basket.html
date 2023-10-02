@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Basket</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+
+        h1 {
+            font-size: 36px;
+            color: #333;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin: 10px 0;
+        }
+
+        a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        button {
+            font-size: 16px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: left;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        .container div {
+            margin-bottom: 10px;
+        }
+
+        .container div:last-child {
+            margin-bottom: 0;
+        }
+
+        .container div label {
+            width: 150px;
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        .container div span {
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        .container form {
+            margin-top: 10px;
+        }
+
+        .container input[type="submit"] {
+            font-size: 16px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .container input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .container input.delete-button {
+            font-size: 16px;
+            padding: 10px 20px;
+            background-color: #dc3545; /* Червоний колір для кнопки Delete */
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .container input.delete-button:hover {
+            background-color: #c82333; /* Темно-червоний колір при наведенні */
+        }
+    </style>
+</head>
+<body>
+<h1>Basket</h1>
+
+<div th:if="${error}" style="color:brown" th:text="${error}">Error</div>
+
+<div th:each="goods : ${goods}" class="container">
+    <div>
+        <label>Goods:</label>
+        <span th:text="${goods.getName()}"></span>
+    </div>
+
+    <div>
+        <label>Description:</label>
+        <span th:text="${goods.getDescription()}"></span>
+    </div>
+
+    <div>
+        <label>Price:</label>
+        <span th:text="${goods.getPrice()}"></span>
+    </div>
+
+    <form th:method="POST" th:action="@{/basket/delete/goods}">
+        <input type="hidden" name="idGoods" th:value="${goods.idGood}" />
+        <input type="submit" value="Delete" class="delete-button"/>
+    </form>
+
+</div>
+
+<div th:each="totalPrice : ${totalPrice}" class="container">
+    <div>
+        <label>Total price:</label>
+        <span th:text="${totalPrice.getSuma()}"></span>
+    </div>
+</div>
+
+<button onclick="buy()">Buy</button>
+
+<button onclick="back()">Back</button>
+
+<script>
+    function buy() {
+        window.location.href = 'https://localhost:1000/goods';
+    }
+    function back() {
+        window.location.href = 'https://localhost:1000/goods';
+    }
+</script>
+</body>
+</html>
