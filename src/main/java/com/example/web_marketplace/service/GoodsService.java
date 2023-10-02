@@ -33,7 +33,7 @@ public class GoodsService {
     public void deleteGoods(long idGoods){
         UserDetails userDetails=getUserDetails();
         User user = userData.findByEmail(userDetails.getUsername());
-        goodsData.delete(goodsData.findByIdAndSellerEmail(idGoods,userDetails.getUsername()));
+        goodsData.delete(goodsData.findById(idGoods));
     }
     public void getGoods(Model model){
        model.addAttribute("goods",goodsData.findAll(sort));
@@ -57,13 +57,10 @@ public class GoodsService {
     }
     public void getSortDecreaseByPrice(Model model){
 //        model.addAttribute("goods",)
-
     }
     public void getSortIncreaseByPrice(Model model){
 
-
     }
-
     public static UserDetails getUserDetails() {
         return (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }

@@ -22,7 +22,11 @@ public class UserData implements Data<User>{
     public void delete(User user) {
         userRepository.save(user);
     }
+    public User findById(long id){
 
+        return userRepository.findById(id).orElseThrow(UserNotFoundException::new);
+
+    }
     public boolean isExist(String email){
         Optional<User> sellerOptional= userRepository.findByEmailIgnoreCase(email);
         return sellerOptional.isPresent();
@@ -30,7 +34,7 @@ public class UserData implements Data<User>{
 
     public User findByEmail(String email){
         if(!isExist(email))throw new BadRequestException(
-                "Email don`t exist"
+                "Email don`t exist "+email
         );
         return userRepository
                 .findByEmailIgnoreCase(email)

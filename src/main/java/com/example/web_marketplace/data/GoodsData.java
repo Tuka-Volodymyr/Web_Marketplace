@@ -27,8 +27,8 @@ public class GoodsData implements Data<Goods>{
         goodsRepository.delete(goods);
     }
 
-    public Goods findByIdAndSellerEmail(long id, String email){
-        Optional<Goods> goods= goodsRepository.findByIdAndUserEmail(id,email);
+    public Goods findById(long id){
+        Optional<Goods> goods= goodsRepository.findById(id);
         if(goods.isEmpty())throw new BadRequestException("Goods don`t exist!");
         return goods.get();
     }
@@ -60,7 +60,7 @@ public class GoodsData implements Data<Goods>{
     }
 
     public boolean isExist(Long id,String email){
-        Optional<Goods> commodityOptional= goodsRepository.findByIdAndUserEmail(id,email);
+        Optional<Goods> commodityOptional= goodsRepository.findById(id);
         return commodityOptional.isPresent();
     }
 //    public List<Goods> findByMaxPrice(long price){

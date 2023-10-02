@@ -16,7 +16,7 @@ import java.time.LocalDate;
 public class Goods {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idGood;
     @NotBlank(message = "Name should not be blank!")
     private String name;
     @NotBlank(message = "Description should not be blank!")

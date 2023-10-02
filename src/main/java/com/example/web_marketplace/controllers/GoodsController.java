@@ -6,6 +6,7 @@ import com.example.web_marketplace.forms.IdGoods;
 import com.example.web_marketplace.entities.Goods;
 import com.example.web_marketplace.service.GoodsService;
 import jakarta.validation.Valid;
+import lombok.Data;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
+@Data
 public class GoodsController {
     private final GoodsService goodsService;
 
@@ -29,20 +31,17 @@ public class GoodsController {
     public String addCommodity(@ModelAttribute("goods") @Valid Goods goods, BindingResult bindingResult){
         if(bindingResult.hasErrors())return "goods/addGoods";
         goodsService.addGoods(goods);
-        return "redirect:/goods";
+        return "redirect:/your/goods";
     }
-    @GetMapping("/get/delete/goods")
-    public String getDeleteCommodity(@ModelAttribute("idGoods") IdGoods idGoods){
-        return "goods/deleteGoods";
-    }
+
     @PostMapping("/delete/goods")
-    public String deleteCommodity(@ModelAttribute("idGoods") IdGoods idGoods,Model model){
+    public String deleteCommodity(@RequestParam("idGoods") long idGoods, Model model){
         try {
-            goodsService.deleteGoods(idGoods.getIdGoods());
+            goodsService.deleteGoods(idGoods);
             return "redirect:/your/goods";
         }catch (Exception e){
             model.addAttribute("error",e.getMessage());
-            return "goods/deleteGoods";
+            return "goods/getYourGoods";
         }
 
     }

@@ -8,6 +8,7 @@ import com.example.web_marketplace.entities.User;
 import com.example.web_marketplace.service.GoodsService;
 import com.example.web_marketplace.service.UserService;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Controller;
@@ -43,7 +44,7 @@ public class UserController {
         if(bindingResult.hasErrors())return "authorization/register";
         try {
             userService.addUser(user);
-            return "authorization/login";
+            return "redirect:/login";
         } catch (BadRequestException e) {
             model.addAttribute("error", e.getMessage());
             return "authorization/register";
@@ -86,7 +87,9 @@ public class UserController {
     public String sendCode(@ModelAttribute("emailForm") @Valid EmailForm email, BindingResult bindingResult, Model model){
         if(bindingResult.hasErrors())return "account/changePassword/emailFormForChangePass";
         try {
+
             userService.sendCode(email.getEmail());
+            model.addAttribute("email",email);
             return "redirect:/get/check/code";
         } catch (BadRequestException e) {
             model.addAttribute("error", e.getMessage());
@@ -99,9 +102,9 @@ public class UserController {
         return "account/changePassword/codeForm";
     }
     @PostMapping("/check/code")
-    public String checkCode(@ModelAttribute("code") Code code, Model model){
+    public String checkCode(@ModelAttribute("code") Code code, HttpSession session, Model model){
         try {
-            userService.checkCode(code);
+            userService.checkCode(code,session);
             return "redirect:/get/change/password";
         }catch(Exception e){
             model.addAttribute("error",e.getMessage());
@@ -110,13 +113,16 @@ public class UserController {
 
     }
     @GetMapping("/get/change/password")
-    public String getChangePass(@ModelAttribute("changePass") ChangePass changePass){
+    public String getChangePass(@ModelAttribute("changePass") ChangePass changePass,HttpSession session, Model model){
+        String email = (String) session.getAttribute("email");
+        model.addAttribute("email", email);
         return "account/changePassword/changePassword";
     }
     @PostMapping("/change/password")
     public String changePass(@ModelAttribute("changePass") @Valid ChangePass changePass, BindingResult bindingResult,Model model){
         if(bindingResult.hasErrors())return "account/changePassword/changePassword";
         try {
+
             userService.changePass(changePass);
             return "redirect:/";
         }catch(Exception e){

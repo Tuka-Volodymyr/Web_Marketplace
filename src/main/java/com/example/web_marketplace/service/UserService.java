@@ -7,6 +7,7 @@ import com.example.web_marketplace.forms.ChangePass;
 import com.example.web_marketplace.entities.Code;
 import com.example.web_marketplace.entities.User;
 import com.example.web_marketplace.exceptions.BadRequestException;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -45,9 +46,9 @@ public class UserService {
     }
     public void sendCode(String email){
         User user= userData.findByEmail(email);
-        if(codeData.findCodeByAccountId(user.getId()).isPresent())
-            codeData.delete(codeData.findCodeByAccountId(user.getId()).get());
-        Code code=new Code(user.getId());
+        if(codeData.findCodeByAccountId(user.getIdUser()).isPresent())
+            codeData.delete(codeData.findCodeByAccountId(user.getIdUser()).get());
+        Code code=new Code(user.getIdUser());
         codeData.save(code);
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(email);
@@ -55,8 +56,9 @@ public class UserService {
         message.setText("Code: "+code.getCode());
         javaMailSender.send(message);
     }
-    public void checkCode(Code code){
-        codeData.findByCode(code.getCode());
+    public void checkCode(Code code, HttpSession session){
+        Code foundCode= codeData.findByCode(code.getCode());
+        session.setAttribute("email",userData.findById(foundCode.getUserId()).getEmail());
     }
     public void changePass(ChangePass changePass){
         User user =userData.findByEmail(changePass.getEmail());

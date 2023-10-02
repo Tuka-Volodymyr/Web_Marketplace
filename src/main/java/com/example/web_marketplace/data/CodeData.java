@@ -25,9 +25,10 @@ public class CodeData implements Data<Code>{
     public Optional<Code> findCodeByAccountId(long userId){
         return sentCodeInfoRepository.findByUserId(userId);
     }
-    public void findByCode(String code){
+    public Code findByCode(String code){
         Optional<Code> cod = sentCodeInfoRepository.findByCode(code);
         if (cod.isEmpty())throw new BadRequestException("Code is wrong");
+        return cod.get();
     }
 
 }
