@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Repository
 public interface GoodsRepository extends JpaRepository<Goods,Long> {
-    Optional<Goods> findByIdAndUserEmail(Long id, String userEmail);
+
     List<Goods> findByCategory(String category);
     List<Goods> findByPriceGreaterThanEqual(long minPrice, Sort sort);
     List<Goods> findByPriceLessThanEqual(long maxPrice);
