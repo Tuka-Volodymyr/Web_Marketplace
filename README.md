@@ -28,6 +28,23 @@ The Web Marketplace project is an online platform designed for facilitating trad
 7. **Error Handling and Messaging**
    - The system provides informative error messages to guide users through any issues they may encounter.
 
+## Dependencies
+
+- **GoodsService**: This service manages operations related to goods, including adding, deleting, and retrieving goods.
+
+- **UserService**: Responsible for user-related operations such as registration, authentication, and account management.
+
+- **PurchaseService**: This service handles purchase-related functionalities, including adding goods to the basket, viewing the basket, and making purchases.
+
+- **Database **: The project relies on a database to persistently store user and goods information.
+
+## Usage Notes
+- Various endpoints are provided to handle user authentication, registration, password recovery, and account management.
+  
+- Error messages are displayed in case of invalid input or failed operations.
+  
+- The project relies on services such as `UserService`, `GoodsService`, `PurchaseService` for carrying out business logic.
+
 
 ## Controller: UserController
 
@@ -91,14 +108,6 @@ This controller handles user-related actions within the Web Marketplace project.
     - `GET /get/account`
     - Displays information about the user's account.
 
-### Dependencies
-- `UserService` for handling user-related operations.
-- `GoodsService` for managing goods.
-
-### Usage Notes
-- Various endpoints are provided to handle user authentication, registration, password recovery, and account management.
-- Error messages are displayed in case of invalid input or failed operations.
-- The project relies on services such as `UserService` and `GoodsService` for carrying out business logic.
 
 ---
 
@@ -163,4 +172,8 @@ The `PurchaseController` manages purchase-related actions within the Web Marketp
 4. **Delete Good From Basket**
    - `POST /basket/delete/goods`
    - Deletes a good from the user's basket. Handles exceptions by displaying an error message and redirects to the basket page.
+   - 
+
+
+
 
