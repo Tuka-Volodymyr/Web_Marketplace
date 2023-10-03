@@ -1,6 +1,33 @@
-# Web_Marketplace
+# Web Marketplace Project
 
-The Marketplace project is a robust e-commerce platform developed using Java and HTML. It provides a seamless and user-friendly interface for buying and selling a wide range of products. Leveraging the power of Java for backend operations and HTML for frontend design, this project offers a reliable and dynamic shopping experience.
+The Web Marketplace project is an online platform designed for facilitating trade of goods and services over the internet. It provides users with the ability to create accounts, add, modify, and delete their listed goods or services, search and view information about other users, and manage their account settings.
+
+## Key Features
+
+1. **User Authentication and Registration**
+   - Users can create accounts, log in, and log out securely.
+   - Account creation is facilitated with a registration form.
+
+2. **Goods Management**
+   - Users can add new goods, specifying details such as name, description, and price.
+   - They can also view, edit, and delete their listed goods.
+
+3. **Search and Filter Functionality**
+   - Users can search for goods based on various criteria such as category, price range, etc.
+
+4. **Shopping Basket**
+   - Users can add goods to a shopping basket for later purchase.
+
+5. **Purchase Process**
+   - Users can select goods from the marketplace to purchase.
+   - They can view a menu for specific goods before making a purchase.
+
+6. **Password Recovery**
+   - Users can request a password reset through a verification code sent to their registered email.
+
+7. **Error Handling and Messaging**
+   - The system provides informative error messages to guide users through any issues they may encounter.
+
 
 ## Controller: UserController
 
