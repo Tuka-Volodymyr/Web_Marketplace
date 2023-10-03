@@ -24,7 +24,6 @@ public class UserController {
         this.userService = userService;
     }
 
-    //WWWWWWWWWWWWWWWWWWWWWWWWWWWWWW Write account settings!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     @GetMapping("/")
     public String login(){
         return "authorization/index";
