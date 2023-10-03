@@ -2,7 +2,7 @@
 
 The Web Marketplace project is an online platform designed for facilitating trade of goods and services over the internet. It provides users with the ability to create accounts, add, modify, and delete their listed goods or services, search and view information about other users, and manage their account settings.
 
-## Key Features
+## Main Features
 
 1. **User Authentication and Registration**
    - Users can create accounts, log in, and log out securely.
