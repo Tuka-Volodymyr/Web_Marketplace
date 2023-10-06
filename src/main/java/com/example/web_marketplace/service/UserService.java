@@ -56,9 +56,8 @@ public class UserService {
         message.setText("Code: "+code.getCode());
         javaMailSender.send(message);
     }
-    public void checkCode(Code code, HttpSession session){
-        Code foundCode= codeData.findByCode(code.getCode());
-        session.setAttribute("email",userData.findById(foundCode.getUserId()).getEmail());
+    public void checkCode(String code){
+        codeData.findByCode(code);
     }
     public void changePass(ChangePass changePass){
         User user =userData.findByEmail(changePass.getEmail());

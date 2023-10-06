@@ -83,12 +83,11 @@ public class UserController {
         return "account/changePassword/emailFormForChangePass";
     }
     @PostMapping("/send/code")
-    public String sendCode(@ModelAttribute("emailForm") @Valid EmailForm email, BindingResult bindingResult, Model model){
+    public String sendCode(@ModelAttribute("emailForm") @Valid EmailForm email, BindingResult bindingResult, Model model,HttpSession session){
         if(bindingResult.hasErrors())return "account/changePassword/emailFormForChangePass";
         try {
-
             userService.sendCode(email.getEmail());
-            model.addAttribute("email",email);
+            session.setAttribute("email",email.getEmail());
             return "redirect:/get/check/code";
         } catch (BadRequestException e) {
             model.addAttribute("error", e.getMessage());
@@ -101,9 +100,9 @@ public class UserController {
         return "account/changePassword/codeForm";
     }
     @PostMapping("/check/code")
-    public String checkCode(@ModelAttribute("code") Code code, HttpSession session, Model model){
+    public String checkCode(@RequestParam("code") String code, Model model){
         try {
-            userService.checkCode(code,session);
+            userService.checkCode(code);
             return "redirect:/get/change/password";
         }catch(Exception e){
             model.addAttribute("error",e.getMessage());
@@ -136,7 +135,17 @@ public class UserController {
         return "account/yourAccount";
 
     }
-
+    @GetMapping("/get/account/settings")
+    public String getAccountSettings(){
+        return "account/settings/settings";
+    }
+    @GetMapping("/send/code/without/emailForm")
+    public String sendCodeWithoutEmailForm(HttpSession session){
+        String email=GoodsService.getUserDetails().getUsername();
+        userService.sendCode(email);
+        session.setAttribute("email",email);
+        return "redirect:/get/check/code";
+    }
 
 
 }
