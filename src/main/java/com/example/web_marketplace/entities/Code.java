@@ -26,11 +26,15 @@ public class Code {
     }
 
     public String generateCod() {
-        StringBuilder stringBuilderCod=new StringBuilder();
-        Random rand = new Random();
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        Random random = new Random();
+        StringBuilder code = new StringBuilder();
+
         for (int i = 0; i < 6; i++) {
-            stringBuilderCod.append(rand.nextInt(10));
+            int randomIndex = random.nextInt(characters.length());
+            char randomChar = characters.charAt(randomIndex);
+            code.append(randomChar);
         }
-        return stringBuilderCod.toString();
+        return code.toString();
     }
 }

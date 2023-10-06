@@ -52,10 +52,10 @@
 </head>
 <body>
 <h1>Change password</h1>
-<form th:method="POST" th:action="@{/check/code}" th:object="${code}">
+<form th:method="POST" th:action="@{/check/code}">
     <div>
         <label for="code">Enter code from email:</label>
-        <input type="text" th:field="*{code}" id="code"/>
+        <input type="text" name="code" id="code"/>
     </div>
     <div th:if="${error}" class="error" th:text="${error}"></div>
     <input type="submit" value="Next"/>

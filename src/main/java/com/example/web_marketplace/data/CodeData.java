@@ -3,7 +3,6 @@ package com.example.web_marketplace.data;
 import com.example.web_marketplace.entities.Code;
 import com.example.web_marketplace.exceptions.BadRequestException;
 import com.example.web_marketplace.repositories.CodeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -25,10 +24,9 @@ public class CodeData implements Data<Code>{
     public Optional<Code> findCodeByAccountId(long userId){
         return sentCodeInfoRepository.findByUserId(userId);
     }
-    public Code findByCode(String code){
+    public void findByCode(String code){
         Optional<Code> cod = sentCodeInfoRepository.findByCode(code);
         if (cod.isEmpty())throw new BadRequestException("Code is wrong");
-        return cod.get();
     }
 
 }
