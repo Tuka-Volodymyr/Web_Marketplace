@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>History</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .order {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        .order h2 {
+            margin: 0;
+            font-size: 1.2em;
+            color: #333;
+        }
+        .order ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+        .order li {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+<h1>History of orders</h1>
+<div th:each="order : ${order}" class="order">
+    <h2>Order Information</h2>
+    <br/>
+    <div th:text="'Goods:'"></div>
+    <br/>
+    <ul>
+        <li th:each="good, index : ${order.service}" th:text="${index.index + 1 + '. ' + good.name}"></li>
+    </ul>
+    <br/>
+    <div th:text="'Total price: ' + ${order.price}"></div>
+
+    <br/>
+    <div th:text="'Name: ' + ${order.name}"></div>
+    <div th:text="'Email: ' + ${order.email}"></div>
+    <div th:text="'Phone: ' + ${order.phone}"></div>
+    <div th:text="'City: ' + ${order.city}"></div>
+    <div th:text="'Post Office: ' + ${order.postOffice}"></div>
+    <div th:text="'Address: ' + ${order.address}"></div>
+    <div th:text="'Date: ' + ${order.date}"></div>
+    <div th:text="'Delivery: ' + ${order.delivery}"></div>
+    <div th:text="'Payment: ' + ${order.payment}"></div>
+    <div th:text="'Comments: ' + ${order.comments}"></div>
+</div>
+</body>
+</html>

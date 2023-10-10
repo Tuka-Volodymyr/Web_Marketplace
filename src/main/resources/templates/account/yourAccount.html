@@ -64,6 +64,8 @@
 <button onclick="accountSettings()">Account settings</button>
 <br/>
 <button onclick="yourGoods()">Your goods</button>
+<br/>
+<button onclick="history()">History of buying</button>
 
 <script>
     function yourGoods() {
@@ -73,6 +75,10 @@
     function accountSettings() {
         window.location.href = 'https://localhost:1000/get/account/settings';
     }
+    function history() {
+        window.location.href = 'https://localhost:1000/get/history/order';
+    }
+
 </script>
 </body>
 </html>
