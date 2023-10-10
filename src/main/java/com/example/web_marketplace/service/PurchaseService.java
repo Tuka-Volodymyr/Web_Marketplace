@@ -1,22 +1,19 @@
 package com.example.web_marketplace.service;
 
-import com.example.web_marketplace.data.BasketData;
-import com.example.web_marketplace.data.GoodsData;
-import com.example.web_marketplace.data.TotalPriceData;
-import com.example.web_marketplace.data.UserData;
-import com.example.web_marketplace.entities.Basket;
-import com.example.web_marketplace.entities.Goods;
-import com.example.web_marketplace.entities.TotalPrice;
-import com.example.web_marketplace.entities.User;
+import com.example.web_marketplace.data.*;
+import com.example.web_marketplace.entities.*;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.web_marketplace.service.GoodsService.getUserDetails;
+import static com.example.web_marketplace.service.GoodsService.sort;
 
 @Service
 public class PurchaseService {
@@ -24,12 +21,14 @@ public class PurchaseService {
     private final UserData userData;
     private final BasketData basketData;
     private final TotalPriceData totalPriceData;
+    private final OrderData orderData;
 
-    public PurchaseService(GoodsData goodsData, UserData userData, BasketData basketData, TotalPriceData totalPriceData) {
+    public PurchaseService(GoodsData goodsData, UserData userData, BasketData basketData, TotalPriceData totalPriceData, OrderData orderData) {
         this.goodsData = goodsData;
         this.userData=userData;
         this.basketData = basketData;
         this.totalPriceData = totalPriceData;
+        this.orderData = orderData;
     }
     public void getBasket(Model model){
         User user=userData.findByEmail(getUserDetails().getUsername());
@@ -75,5 +74,39 @@ public class PurchaseService {
         }
         totalPriceData.save(totalPrice);
         basketData.save(basket);
+    }
+    public void getOrderMenu(Model model,Order order){
+        User user=userData.findByEmail(getUserDetails().getUsername());
+        List<Basket> basketList=basketData.findByUser(user.getIdUser());
+        ArrayList<Goods> goodsArrayList=new ArrayList<>();
+        for (Basket basket:basketList)
+            goodsArrayList.add(goodsData.findById(basket.getIdGoods()));
+        model.addAttribute("goods",goodsArrayList);
+        model.addAttribute("price",totalPriceData.findByUserID(user.getIdUser()));
+        order.setService(goodsArrayList);
+    }
+    @Transactional
+    public void buy(Order order){
+        User user=userData.findByEmail(getUserDetails().getUsername());
+        List<Basket> basket=basketData.findByUser(user.getIdUser());
+        List<Goods> goodsList=new ArrayList<>();
+        TotalPrice totalPrice=totalPriceData.findByUserID(user.getIdUser());
+        for(Basket someBasket:basket){
+            goodsList.add(goodsData.findById(someBasket.getIdGoods()));
+        }
+        order.setIdBuyerAccount(user.getIdUser());
+        order.setDate(LocalDate.now());
+        order.setPrice(totalPrice.getSuma());
+        order.setService(goodsList);
+        orderData.save(order);
+        totalPriceData.delete(totalPrice);
+        basketData.deleteList(basket);
+    }
+    public void getHistoryOrder(Model model){
+        User user=userData.findByEmail(getUserDetails().getUsername());
+        model.addAttribute("order",orderData.findByUserId(user.getIdUser()));
+
+
+
     }
 }

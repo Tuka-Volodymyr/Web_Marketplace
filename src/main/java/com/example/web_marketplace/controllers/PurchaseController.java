@@ -1,9 +1,11 @@
 package com.example.web_marketplace.controllers;
 
+import com.example.web_marketplace.entities.Order;
 import com.example.web_marketplace.service.PurchaseService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -46,4 +48,22 @@ public class PurchaseController {
         }
     }
 
+
+
+    //History buying, rating
+    @GetMapping("/get/order/menu")
+    public String getOrderMenu(@ModelAttribute("order")Order order,Model model){
+        purchaseService.getOrderMenu(model,order);
+        return "goods/buy/orderForm";
+    }
+    @PostMapping("/buy")
+    public String buy(@ModelAttribute("order")Order order){
+        purchaseService.buy(order);
+        return "redirect:/goods";
+    }
+    @GetMapping("/get/history/order")
+    public String getHistoryOrder(Model model){
+        purchaseService.getHistoryOrder(model);
+        return "goods/buy/orderHistory";
+    }
 }

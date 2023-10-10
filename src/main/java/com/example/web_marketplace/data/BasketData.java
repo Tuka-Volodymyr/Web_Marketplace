@@ -18,9 +18,10 @@ public class BasketData implements Data<Basket>{
         this.basketRepository = basketRepository;
     }
 
-    @Override
-    public void delete(Basket data) {
-        basketRepository.delete(data);
+
+    public void deleteList(List<Basket> data) {
+        basketRepository.deleteAll(data);
+
     }
     public Basket findByIds(Long idUser,Long idGood){
         Optional<Basket> basket= basketRepository.findByIdUserAndIdGoods(idUser,idGood);
@@ -30,6 +31,12 @@ public class BasketData implements Data<Basket>{
     public List<Basket> findByUser(long idUser){
         return basketRepository.findByIdUser(idUser);
     }
+
+    @Override
+    public void delete(Basket data) {
+        basketRepository.delete(data);
+    }
+
     @Override
     public void save(Basket data) {
         basketRepository.save(data);
