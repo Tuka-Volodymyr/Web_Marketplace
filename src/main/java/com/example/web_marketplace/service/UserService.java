@@ -9,6 +9,7 @@ import com.example.web_marketplace.forms.ChangePass;
 import com.example.web_marketplace.entities.Code;
 import com.example.web_marketplace.entities.User;
 import com.example.web_marketplace.exceptions.BadRequestException;
+import com.example.web_marketplace.forms.EmailForm;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -83,6 +84,7 @@ public class UserService {
         if(rating.isEmpty())model.addAttribute("averageRating",0);
     }
     public void evaluate(Rating rating,HttpSession session){
+
         rating.setIdSeller((Long) session.getAttribute("idSeller"));
         Optional<Rating> sellerRating=ratingData.findBySeller(rating.getIdSeller());
         if(sellerRating.isPresent()){

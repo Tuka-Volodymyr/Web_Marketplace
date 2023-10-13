@@ -152,6 +152,6 @@ public class UserController {
     @PostMapping("/evaluate")
     public String evaluate(@ModelAttribute("rating") Rating rating, HttpSession session){
         userService.evaluate(rating,session);
-        return "account/findSeller/userInfo";
+        return "redirect:/get/user";
     }
 }
