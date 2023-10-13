@@ -1,5 +1,6 @@
 package com.example.web_marketplace.controllers;
 
+import com.example.web_marketplace.entities.Rating;
 import com.example.web_marketplace.exceptions.BadRequestException;
 import com.example.web_marketplace.forms.ChangePass;
 import com.example.web_marketplace.forms.EmailForm;
@@ -56,11 +57,13 @@ public class UserController {
     }
 
     @PostMapping("/find/user")
-    public String infoOfSeller(@ModelAttribute("emailForm") @Valid EmailForm email, BindingResult bindingResult, Model model){
+    public String infoOfSeller(@ModelAttribute("emailForm") @Valid EmailForm email, BindingResult bindingResult,
+                               Model model,@ModelAttribute("rating") Rating rating,HttpSession session){
         if(bindingResult.hasErrors())return "account/findSeller/emailFormForFindUser";
         try {
-            userService.infoOfUser(email.getEmail(),model);
+            userService.infoOfUser(email.getEmail(),model,session);
             userService.goodsToAttribute(model, email.getEmail());
+            userService.ratingToAttribute(model,email.getEmail());
             return "account/findSeller/userInfo";
         } catch (BadRequestException e) {
             model.addAttribute("error", e.getMessage());
@@ -68,7 +71,6 @@ public class UserController {
         }
 
     }
-
 
 
     @GetMapping("/main")
@@ -130,8 +132,8 @@ public class UserController {
 
     }
     @GetMapping("/get/account")
-    public String yourAccount(Model model){
-        userService.infoOfUser(GoodsService.getUserDetails().getUsername(),model);
+    public String yourAccount(Model model,HttpSession session){
+        userService.infoOfUser(GoodsService.getUserDetails().getUsername(),model,session);
         return "account/yourAccount";
 
     }
@@ -147,5 +149,9 @@ public class UserController {
         return "redirect:/get/check/code";
     }
 
-
+    @PostMapping("/evaluate")
+    public String evaluate(@ModelAttribute("rating") Rating rating, HttpSession session){
+        userService.evaluate(rating,session);
+        return "account/findSeller/userInfo";
+    }
 }

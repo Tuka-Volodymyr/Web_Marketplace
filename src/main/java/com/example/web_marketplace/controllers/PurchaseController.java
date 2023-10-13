@@ -50,7 +50,7 @@ public class PurchaseController {
 
 
 
-    //History buying, rating
+
     @GetMapping("/get/order/menu")
     public String getOrderMenu(@ModelAttribute("order")Order order,Model model){
         purchaseService.getOrderMenu(model,order);
@@ -66,4 +66,5 @@ public class PurchaseController {
         purchaseService.getHistoryOrder(model);
         return "goods/buy/orderHistory";
     }
+
 }

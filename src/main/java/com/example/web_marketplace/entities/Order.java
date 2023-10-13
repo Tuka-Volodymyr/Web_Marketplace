@@ -23,7 +23,6 @@ public class Order {
     private String email;
     private String phone;
     @OneToMany
-
     private List<Goods> service;
     private String city;
     private String postOffice;
