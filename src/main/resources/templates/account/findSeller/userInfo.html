@@ -58,6 +58,36 @@
         button:hover {
             background-color: #0056b3;
         }
+
+        .rating-form-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .rating-form-container label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .rating-form-container select {
+            font-size: 14px;
+            padding: 3px 6px;
+        }
+
+        .rating-form-container button {
+            margin-top: 10px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .rating-form-container button:hover {
+            background-color: #218838;
+        }
     </style>
 </head>
 <body>
@@ -78,7 +108,23 @@
         <label>Phone:</label>
         <a th:text="${user.getPhone()}">User</a>
     </div>
+    <div>
+        <label>Rating:</label>
+        <a th:text="${averageRating}">rating</a>
+    </div>
+    <br/>
+    <form th:method="POST" th:action="@{/evaluate}" th:object="${rating}" class="rating-form-container">
+        <label for="rating">Choose a rating:</label>
+        <select id="rating" th:field=*{lastRating}>
+            <option th:each="i : ${#numbers.sequence(1, 5)}"
+                    th:value="${i}">
+                <th:block th:text="${i + ' stars'}"></th:block>
+            </option>
+        </select>
+        <button type="submit">Add evaluate</button>
+    </form>
 </div>
+
 
 <h2>All goods</h2>
 
