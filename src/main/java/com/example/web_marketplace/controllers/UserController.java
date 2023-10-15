@@ -27,7 +27,7 @@ public class UserController {
 
     @GetMapping("/")
     public String login(){
-        return "authorization/index";
+        return "authorization/loginForm";
     }
     @GetMapping("/login")
     public String loginForm(){
@@ -134,8 +134,8 @@ public class UserController {
     @GetMapping("/get/account")
     public String yourAccount(Model model,HttpSession session){
         userService.infoOfUser(GoodsService.getUserDetails().getUsername(),model,session);
+        userService.ratingToAttribute(model,GoodsService.getUserDetails().getUsername());
         return "account/yourAccount";
-
     }
     @GetMapping("/get/account/settings")
     public String getAccountSettings(){

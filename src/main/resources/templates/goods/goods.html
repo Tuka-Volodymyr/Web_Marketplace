@@ -64,14 +64,28 @@
         .value {
             font-style: normal;
         }
+        .top-buttons {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .top-buttons button {
+            margin-left: 10px;
+        }
+
 
         /* Стилізація посилань */
 
     </style>
 </head>
 <body>
-<h1>Goods</h1>
-
+<h1>Web Marketplace</h1>
+<div class="top-buttons">
+    <button onclick="yourAccount()">Account</button>
+    <button onclick="getUser()">Find Seller</button>
+    <button onclick="logOut()">Log Out</button>
+</div>
 <button onclick="goods()" style="margin-bottom: 10px;">Filter goods</button>
 
 <button onclick="basket()" style="margin-bottom: 10px;">Basket</button>
@@ -125,6 +139,16 @@
     }
     function yourGoods() {
         window.location.href = 'https://localhost:1000/your/goods';
+    }
+    function logOut() {
+        window.location.href = 'https://localhost:1000/login';
+    }
+
+    function getUser() {
+        window.location.href = 'https://localhost:1000/get/user';
+    }
+    function yourAccount() {
+        window.location.href = 'https://localhost:1000/get/account';
     }
 
 </script>

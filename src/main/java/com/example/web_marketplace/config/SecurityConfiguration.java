@@ -40,7 +40,7 @@ public class SecurityConfiguration{
                         .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .defaultSuccessUrl("/main", true))
+                        .defaultSuccessUrl("/goods", true))
                 .httpBasic(Customizer.withDefaults())
                 .build();
     }

@@ -42,6 +42,17 @@
         button:hover {
             background-color: #0056b3;
         }
+        .top-buttons {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .top-buttons button {
+            margin-left: 10px;
+        }
+
+
     </style>
 </head>
 <body>
@@ -59,13 +70,18 @@
     <label for="phone">Your phone num:</label>
     <a th:text="${user.getPhone()}" id="phone"></a>
     <br/>
+    <div>
+        <label>Rating:</label>
+        <a th:text="${averageRating}">rating</a>
+    </div>
+</div>
+<div class="top-buttons">
+    <button onclick="accountSettings()">Account settings</button>
+    <button onclick="yourGoods()">Your goods</button>
+
+    <button onclick="history()">History of buying</button>
 </div>
 
-<button onclick="accountSettings()">Account settings</button>
-<br/>
-<button onclick="yourGoods()">Your goods</button>
-<br/>
-<button onclick="history()">History of buying</button>
 
 <script>
     function yourGoods() {

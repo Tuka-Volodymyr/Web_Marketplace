@@ -54,10 +54,22 @@
         .button-group button {
             flex-basis: 48%;
         }
+        .top-buttons {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .top-buttons button {
+            margin-left: 10px;
+        }
     </style>
 </head>
 <body>
 <h1>Log In</h1>
+<div class="top-buttons">
+    <button onclick="register()">Sign up</button>
+</div>
 <form th:action="@{/login}" method="POST">
     <div>
         <label for="username">Username: </label>
@@ -79,6 +91,9 @@
 <script>
     function changePass() {
         window.location.href = 'https://localhost:1000/get/send/code';
+    }
+    function register() {
+        window.location.href = 'https://localhost:1000/new/user';
     }
 
     // function back() {

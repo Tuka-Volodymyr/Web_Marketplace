@@ -75,13 +75,26 @@
         .delete-button:hover {
             background-color: #c82333; /* Темно-червоний колір при наведенні */
         }
+        .top-buttons {
+            position: absolute;
+            top: 20px;
+            right: 200px;
+        }
+
+        .top-buttons button {
+            margin-left: 10px;
+        }
+
+
     </style>
 </head>
 <body>
 <h1>Your Goods</h1>
+<div class="top-buttons">
+    <button onclick="newGoods()">Add Goods</button>
+</div>
 
-<button onclick="newGoods()">Add Goods</button>
-<br/>
+
 
 <div th:each="goods : ${goods}" class="goods-container">
     <div>
