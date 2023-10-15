@@ -84,7 +84,11 @@
             <scope>test</scope>
         </dependency>
 
-
+        <dependency>
+            <groupId>com.stripe</groupId>
+            <artifactId>stripe-java</artifactId>
+            <version>19.45.0</version> <!-- Перевірте останню версію на сайті Stripe -->
+        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

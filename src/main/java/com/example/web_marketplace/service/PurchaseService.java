@@ -4,6 +4,7 @@ import com.example.web_marketplace.data.*;
 import com.example.web_marketplace.entities.*;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -22,6 +23,7 @@ public class PurchaseService {
     private final BasketData basketData;
     private final TotalPriceData totalPriceData;
     private final OrderData orderData;
+    public static final Sort sortOrder = Sort.by(Sort.Direction.DESC, "date");
 
     public PurchaseService(GoodsData goodsData, UserData userData, BasketData basketData, TotalPriceData totalPriceData, OrderData orderData) {
         this.goodsData = goodsData;
@@ -98,14 +100,14 @@ public class PurchaseService {
         order.setDate(LocalDate.now());
         order.setPrice(totalPrice.getSuma());
         order.setService(goodsList);
+
         orderData.save(order);
         totalPriceData.delete(totalPrice);
         basketData.deleteList(basket);
     }
     public void getHistoryOrder(Model model){
         User user=userData.findByEmail(getUserDetails().getUsername());
-        model.addAttribute("order",orderData.findByUserId(user.getIdUser()));
-
+        model.addAttribute("order",orderData.findByUserId(user.getIdUser(),sortOrder));
 
 
     }
