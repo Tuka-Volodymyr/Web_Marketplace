@@ -29,11 +29,29 @@
         button:hover {
             background-color: #0056b3;
         }
+        .top-buttons {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .top-buttons button {
+            margin-left: 10px;
+        }
     </style>
 </head>
 <body>
 <h1>Settings</h1>
 <button onclick="changePass()">Change Password</button>
+
+<div class="top-buttons">
+    <button onclick="back()">Back</button>
+</div>
+<script>
+    function back() {
+        window.location.href = 'https://localhost:1000/get/account';
+    }
+</script>
 <script>
     function changePass(){
         window.location.href = 'https://localhost:1000/send/code/without/emailForm';

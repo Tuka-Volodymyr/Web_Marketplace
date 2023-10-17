@@ -7,6 +7,10 @@
         body {
             font-family: Arial, sans-serif;
         }
+        .order-container {
+            max-width: 700px;
+            padding-left: 10px; /
+        }
         .order {
             border: 1px solid #ccc;
             padding: 10px;
@@ -25,32 +29,68 @@
         .order li {
             margin-bottom: 5px;
         }
+        .top-buttons {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .top-buttons button {
+            margin-left: 10px;
+        }
+        button {
+            font-size: 16px;
+            padding: 10px 20px;
+            background-color: #007BFF; /* Set background color to blue */
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+
     </style>
 </head>
 <body>
-<h1>History of orders</h1>
-<div th:each="order : ${order}" class="order">
-    <h2>Order Information</h2>
-    <br/>
-    <div th:text="'Goods:'"></div>
-    <br/>
-    <ul>
-        <li th:each="good, index : ${order.service}" th:text="${index.index + 1 + '. ' + good.name}"></li>
-    </ul>
-    <br/>
-    <div th:text="'Total price: ' + ${order.price}"></div>
+<br/>
+<div class="top-buttons">
+    <button onclick="back()">Back</button>
+</div>
 
-    <br/>
-    <div th:text="'Name: ' + ${order.name}"></div>
-    <div th:text="'Email: ' + ${order.email}"></div>
-    <div th:text="'Phone: ' + ${order.phone}"></div>
-    <div th:text="'City: ' + ${order.city}"></div>
-    <div th:text="'Post Office: ' + ${order.postOffice}"></div>
-    <div th:text="'Address: ' + ${order.address}"></div>
-    <div th:text="'Date: ' + ${order.date}"></div>
-    <div th:text="'Delivery: ' + ${order.delivery}"></div>
-    <div th:text="'Payment: ' + ${order.payment}"></div>
-    <div th:text="'Comments: ' + ${order.comments}"></div>
+<script>
+    function back() {
+        window.location.href = 'https://localhost:1000/get/account';
+    }
+</script>
+<h1>History of orders</h1>
+
+<div class="order-container">
+    <div th:each="order : ${order}" class="order">
+        <h2>Order Information</h2>
+        <br/>
+        <div th:text="'Goods:'"></div>
+        <br/>
+        <ul>
+            <li th:each="good, index : ${order.service}" th:text="${index.index + 1 + '. ' + good.name}"></li>
+        </ul>
+        <br/>
+        <div th:text="'Total price: ' + ${order.price}"></div>
+
+        <br/>
+        <div th:text="'Name: ' + ${order.name}"></div>
+        <div th:text="'Email: ' + ${order.email}"></div>
+        <div th:text="'Phone: ' + ${order.phone}"></div>
+        <div th:text="'City: ' + ${order.city}"></div>
+        <div th:text="'Post Office: ' + ${order.postOffice}"></div>
+        <div th:text="'Address: ' + ${order.address}"></div>
+        <div th:text="'Date: ' + ${order.date}"></div>
+        <div th:text="'Delivery: ' + ${order.delivery}"></div>
+        <div th:text="'Payment: ' + ${order.payment}"></div>
+        <div th:text="'Comments: ' + ${order.comments}"></div>
+    </div>
 </div>
 </body>
 </html>

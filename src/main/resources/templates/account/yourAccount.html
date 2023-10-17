@@ -92,6 +92,7 @@
     <button onclick="accountSettings()">Account settings</button>
     <button onclick="yourGoods()">Your goods</button>
     <button onclick="history()">History of buying</button>
+    <button onclick="back()">Back</button>
 </div>
 
 <script>
@@ -106,6 +107,11 @@
     function history() {
         window.location.href = 'https://localhost:1000/get/history/order';
     }
+
+    function back() {
+        window.location.href = 'https://localhost:1000/goods';
+    }
+
 </script>
 </body>
 </html>

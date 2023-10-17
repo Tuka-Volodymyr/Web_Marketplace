@@ -129,10 +129,18 @@
         <input type="hidden" name="idGoods" th:value="${goods.idGood}" />
         <br/>
         <input type="submit" value="Add to basket"/>
+        <button onclick="back()">Back</button>
     </form>
     <div th:if="${error}" class="error" th:text="${error}"></div>
 </div>
 
+
+
+<script>
+    function back() {
+        window.location.href = 'https://localhost:1000/goods';
+    }
+</script>
 
 </body>
 </html>

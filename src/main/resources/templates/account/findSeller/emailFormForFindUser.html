@@ -46,9 +46,36 @@
         .error {
             color: brown;
         }
+        button {
+            font-size: 16px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+        .top-buttons {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .top-buttons button {
+            margin-left: 10px;
+        }
     </style>
 </head>
 <body>
+<div class="top-buttons">
+    <button onclick="back()">Back</button>
+</div>
+
 <h1>Web Marketplace</h1>
 <form th:method="POST" th:action="@{/find/user}" th:object="${emailForm}">
     <label for="email">Enter email of seller:</label>
@@ -57,9 +84,16 @@
     <div th:if="${error}" class="error" th:text="${error}"></div>
     <br/>
     <input type="submit" value="Find seller"/>
+
 </form>
 <br/>
 
+
+<script>
+    function back() {
+        window.location.href = 'https://localhost:1000/goods';
+    }
+</script>
 </body>
 </html>
 

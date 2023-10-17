@@ -3,6 +3,7 @@ package com.example.web_marketplace.service;
 import com.example.web_marketplace.data.*;
 import com.example.web_marketplace.entities.*;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +18,7 @@ import static com.example.web_marketplace.service.GoodsService.getUserDetails;
 import static com.example.web_marketplace.service.GoodsService.sort;
 
 @Service
+@RequiredArgsConstructor
 public class PurchaseService {
     private final GoodsData goodsData;
     private final UserData userData;
@@ -25,13 +27,6 @@ public class PurchaseService {
     private final OrderData orderData;
     public static final Sort sortOrder = Sort.by(Sort.Direction.DESC, "date");
 
-    public PurchaseService(GoodsData goodsData, UserData userData, BasketData basketData, TotalPriceData totalPriceData, OrderData orderData) {
-        this.goodsData = goodsData;
-        this.userData=userData;
-        this.basketData = basketData;
-        this.totalPriceData = totalPriceData;
-        this.orderData = orderData;
-    }
     public void getBasket(Model model){
         User user=userData.findByEmail(getUserDetails().getUsername());
         List<Basket> basketList=basketData.findByUser(user.getIdUser());

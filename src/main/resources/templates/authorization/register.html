@@ -67,14 +67,17 @@
     <div th:if="${error}" class="error" th:text="${error}"></div>
 
     <input type="submit" value="Register"/>
+    <button onclick="back()">Back</button>
 </form>
 
-<!--<button onclick="back()">Back</button>-->
+
+
 
 <script>
-    // function back() {
-    //     window.location.href = 'https://localhost:1000/';
-    // }
+    function back() {
+        window.location.href = 'https://localhost:1000/';
+    }
 </script>
+
 </body>
 </html>

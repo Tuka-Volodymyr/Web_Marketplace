@@ -6,6 +6,7 @@ import com.example.web_marketplace.forms.FilterForm;
 import com.example.web_marketplace.entities.Goods;
 import com.example.web_marketplace.entities.User;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,14 +17,12 @@ import org.springframework.ui.Model;
 import java.time.LocalDate;
 
 @Service
+@RequiredArgsConstructor
 public class GoodsService {
     private final GoodsData goodsData;
     private final UserData userData;
     public static final Sort sort = Sort.by(Sort.Direction.ASC, "price");
-    public GoodsService(GoodsData goodsData, UserData userData) {
-        this.userData = userData;
-        this.goodsData = goodsData;
-    }
+
     public void addGoods(Goods goods){
         UserDetails userDetails=getUserDetails();
         goods.setLocalDate(LocalDate.now());

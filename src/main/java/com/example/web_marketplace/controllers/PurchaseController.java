@@ -8,6 +8,7 @@ import com.stripe.model.Charge;
 import com.stripe.param.ChargeCreateParams;
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,13 +18,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
+@RequiredArgsConstructor
 public class PurchaseController {
     private final PurchaseService purchaseService;
-    public PurchaseController(PurchaseService purchaseService){
-        this.purchaseService=purchaseService;
 
-    }
-    @Value("${stripe.secretKey}") // Додайте ваш secret key у файл application.properties/application.yml
+    @Value("${stripe.secretKey}")
     private String secretKey;
 
     @PostConstruct

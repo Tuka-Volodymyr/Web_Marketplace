@@ -41,6 +41,18 @@
         input[type="submit"]:hover {
             background-color: #0056b3;
         }
+        button {
+            font-size: 16px;
+            padding: 10px 20px;
+            background-color: #007BFF; /* Set background color to blue */
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
 
     </style>
 </head>
@@ -61,6 +73,15 @@
     <br/>
     <br/>
     <input type="submit" value="Find goods"/>
+    <button onclick="back()">Back</button>
 </form>
+<br/>
+
+
+<script>
+    function back() {
+        window.location.href = 'https://localhost:1000/goods';
+    }
+</script>
 </body>
 </html>

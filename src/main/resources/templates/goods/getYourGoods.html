@@ -92,6 +92,7 @@
 <h1>Your Goods</h1>
 <div class="top-buttons">
     <button onclick="newGoods()">Add Goods</button>
+    <button onclick="back()">Back</button>
 </div>
 
 
@@ -133,11 +134,14 @@
 <br/>
 <br/>
 <!--<button onclick="back()">Back</button>-->
+<br/>
+
+
 
 <script>
-    // function back() {
-    //     window.location.href = 'https://localhost:1000/get/account';
-    // }
+    function back() {
+        window.location.href = 'https://localhost:1000/get/account';
+    }
 
     function newGoods() {
         window.location.href = 'https://localhost:1000/new/goods';

@@ -7,6 +7,7 @@ import com.example.web_marketplace.entities.Goods;
 import com.example.web_marketplace.service.GoodsService;
 import jakarta.validation.Valid;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,12 +16,11 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @Data
+@RequiredArgsConstructor
 public class GoodsController {
     private final GoodsService goodsService;
 
-    public GoodsController(GoodsService goodsService) {
-        this.goodsService = goodsService;
-    }
+
 
     @GetMapping("/new/goods")
     public String newCommodity(@ModelAttribute("goods") Goods goods){

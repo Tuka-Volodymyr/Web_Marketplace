@@ -16,6 +16,7 @@ services:
 
 
   app:
+#    image: tukavolodymyr/web_market_place
     build: ./
     container_name: 'java-app'
     ports:

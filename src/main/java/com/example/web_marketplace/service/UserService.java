@@ -11,6 +11,7 @@ import com.example.web_marketplace.entities.User;
 import com.example.web_marketplace.exceptions.BadRequestException;
 import com.example.web_marketplace.forms.EmailForm;
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -27,6 +28,7 @@ import static com.example.web_marketplace.service.GoodsService.getUserDetails;
 
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
     private final GoodsData goodsData;
     private final UserData userData;
@@ -34,14 +36,7 @@ public class UserService {
     private final JavaMailSender javaMailSender;
     private final CodeData codeData;
     private final RatingData ratingData;
-    public UserService(UserData userData, PasswordEncoder passwordEncoder, CodeData codeData, JavaMailSender javaMailSender, GoodsData goodsData, RatingData ratingData) {
-        this.passwordEncoder=passwordEncoder;
-        this.userData = userData;
-        this.codeData=codeData;
-        this.javaMailSender = javaMailSender;
-        this.goodsData = goodsData;
-        this.ratingData = ratingData;
-    }
+
     public void addUser(User user){
         if(userData.isExist(user.getEmail()))throw new BadRequestException(
                 "Email has already used!"
