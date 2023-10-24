@@ -2,6 +2,7 @@ package com.example.web_marketplace.service;
 
 import com.example.web_marketplace.data.*;
 import com.example.web_marketplace.entities.*;
+import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +32,10 @@ public class PurchaseService {
         User user=userData.findByEmail(getUserDetails().getUsername());
         List<Basket> basketList=basketData.findByUser(user.getIdUser());
         List<Goods> goodsList=new ArrayList<>();
+
         for(Basket basket:basketList){
-            goodsList.add(goodsData.findById(basket.getIdGoods()));
+            Goods goods=goodsData.findById(basket.getIdGoods());
+            goodsList.add(goods);
         }
         TotalPrice totalPrice=totalPriceData.findByUserID(user.getIdUser());
         model.addAttribute("totalPrice",totalPrice);
@@ -41,12 +44,12 @@ public class PurchaseService {
     }
     public void deleteGoods(long idGoods){
         User user = userData.findByEmail(getUserDetails().getUsername());
-        Basket basket=basketData.findByIds(user.getIdUser(), idGoods);
+        List<Basket> basket=basketData.findByIds(user.getIdUser(), idGoods);
         Goods goods=goodsData.findById(idGoods);
         TotalPrice totalPrice=totalPriceData.findByUserID(user.getIdUser());
         totalPrice.setSuma(totalPrice.getSuma()-goods.getPrice());
         totalPriceData.save(totalPrice);
-        basketData.delete(basket);
+        basketData.delete(basket.get(0));
     }
 
     public void getBuyMenu(long id,Model model){

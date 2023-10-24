@@ -29,8 +29,7 @@ public class GoodsData implements Data<Goods>{
 
     public Goods findById(long id){
         Optional<Goods> goods= goodsRepository.findById(id);
-        if(goods.isEmpty())throw new BadRequestException("Goods don`t exist!");
-        return goods.get();
+        return goods.orElse(null);
     }
     public List<Goods> findByMinPrice(long price, Sort sort){
         return goodsRepository.findByPriceGreaterThanEqual(price, sort);
@@ -62,6 +61,9 @@ public class GoodsData implements Data<Goods>{
     public boolean isExist(Long id,String email){
         Optional<Goods> commodityOptional= goodsRepository.findById(id);
         return commodityOptional.isPresent();
+    }
+    public Goods findLast(){
+        return goodsRepository.findTopByOrderByIdGoodDesc().orElseThrow();
     }
 //    public List<Goods> findByMaxPrice(long price){
 //        return goodsRepository.findByPriceLessThanEqual(price);

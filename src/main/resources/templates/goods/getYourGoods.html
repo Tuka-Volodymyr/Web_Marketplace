@@ -95,9 +95,17 @@
     <button onclick="back()">Back</button>
 </div>
 
+<div th:each="photoOfGood : ${photoOfGood}" class="goods-container">
+
+</div>
 
 
 <div th:each="goods : ${goods}" class="goods-container">
+
+    <div th:block th:if="${goods.getPhotoOfGood() != null}">
+        <img th:src="'data:image/jpeg;base64,' + ${goods.getPhotoOfGood()}" alt="Photo" width="100" height="110">
+    </div>
+
     <div>
         <label>Goods:</label>
         <span th:text="${goods.getName()}"></span>

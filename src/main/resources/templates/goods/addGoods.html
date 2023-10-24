@@ -1,113 +1,129 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Add goods</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
             text-align: center;
-            margin: 20px;
+            margin: 0;
+            padding: 0;
         }
 
-        h1 {
-            font-size: 36px;
-            color: #333;
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: left; /* Align text to the left within the form */
         }
 
-        .label-input {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin: 10px 0;
+        .form-group {
+            margin-bottom: 20px;
         }
 
-        .label-input label {
-            flex: 1;
-            margin-right: 10px;
-            text-align: right;
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
         }
 
-        .label-input input {
-            flex: 2;
-            padding: 8px;
+        input[type="text"], input[type="number"] {
+            width: calc(100% - 22px); /* Adjusted for padding */
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
             box-sizing: border-box;
         }
 
-        input[type="submit"] {
+        input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .button-container {
+            text-align: center; /* Center the buttons within the container */
+        }
+
+        input[type="submit"], button {
             font-size: 16px;
             padding: 10px 20px;
-            background-color: #007BFF;
+            background-color: #007bff;
             color: #fff;
             border: none;
+            border-radius: 4px;
             cursor: pointer;
             transition: background-color 0.3s;
             margin-top: 10px;
+            display: inline-block; /* Make buttons appear in one line */
         }
 
-        input[type="submit"]:hover {
+        input[type="submit"]:hover, button:hover {
             background-color: #0056b3;
         }
 
-        div.error {
-            color: brown;
-        }
-
-        button {
-            font-size: 16px;
-            padding: 10px 20px;
-            background-color: #007BFF;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            margin-top: 10px;
-        }
-
-        button:hover {
-            background-color: #0056b3;
+        .error {
+            color: #ff0000;
         }
 
     </style>
 </head>
 <body>
-<h1>Add new goods to service</h1>
-<form th:method="POST" th:action="@{/add/goods}" th:object="${goods}">
-    <label for="name">Enter name of goods: </label>
-    <input type="text" th:field="*{name}" id="name"/>
-    <div class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</div>
 
-    <br/>
-    <br/>
-    <label for="description">Enter description of goods: </label>
-    <input type="text" th:field="*{description}" id="description"/>
-    <div class="error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Error</div>
+<div class="container">
+    <h1>Add new goods to service</h1>
 
-    <br/>
-    <br/>
-    <label for="category">Enter category of goods: </label>
-    <input type="text" th:field="*{category}" id="category"/>
-    <div class="error" th:if="${#fields.hasErrors('category')}" th:errors="*{category}">Error</div>
+    <form th:method="POST" th:action="@{/add/goods}" enctype="multipart/form-data" th:object="${goods}">
+        <div class="form-group">
+            <label for="name">Name of goods:</label>
+            <input type="text" th:field="*{name}" id="name" required>
+            <div class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</div>
+        </div>
 
-    <br/>
-    <br/>
-    <label for="price">Enter price of goods: </label>
-    <input type="number" th:field="*{price}" id="price"/>
-    <div class="error" th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Error</div>
+        <div class="form-group">
+            <label for="description">Description of goods:</label>
+            <input type="text" th:field="*{description}" id="description" required>
+            <div class="error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Error</div>
+        </div>
 
+        <div class="form-group">
+            <label for="category">Category of goods:</label>
+            <input type="text" th:field="*{category}" id="category" required>
+            <div class="error" th:if="${#fields.hasErrors('category')}" th:errors="*{category}">Error</div>
+        </div>
 
-    <br/>
-    <input type="submit" value="Add new goods!"/>
-    <button onclick="back()">Back</button>
-</form>
-<br/>
-<br/>
+        <div class="form-group">
+            <label for="price">Price of goods:</label>
+            <input type="number" th:field="*{price}" id="price" required>
+            <div class="error" th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Error</div>
+        </div>
 
+        <div class="form-group">
+            <label for="file">Photo:</label>
+            <input type="file" id="file" name="file" required accept="image/*">
+        </div>
+
+        <div class="button-container">
+            <input type="submit" value="Add new goods!">
+            <button onclick="back()">Back</button>
+        </div>
+
+        <div th:if="${error}" class="error" th:text="${error}"></div>
+    </form>
+</div>
 
 <script>
     function back() {
         window.location.href = 'https://localhost:1000/get/account';
     }
 </script>
+
 </body>
 </html>

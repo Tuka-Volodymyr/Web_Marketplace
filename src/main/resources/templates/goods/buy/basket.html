@@ -109,7 +109,12 @@
 
 <div th:if="${error}" style="color:brown" th:text="${error}">Error</div>
 
+<div th:if="${GoodNotExist != null}" th:text="${GoodNotExist}"></div>
+
 <div th:each="goods : ${goods}" class="container">
+    <div th:block th:if="${goods.getPhotoOfGood() != null}">
+        <img th:src="'data:image/jpeg;base64,' + ${goods.getPhotoOfGood()}" alt="Photo" width="60" height="65">
+    </div>
     <div>
         <label>Goods:</label>
         <span th:text="${goods.getName()}"></span>

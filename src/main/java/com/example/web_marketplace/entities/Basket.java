@@ -18,7 +18,6 @@ public class Basket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idBasket;
-
     private Long idGoods;
     private Long idUser;
 

@@ -94,6 +94,10 @@
 
 <div th:each="goods : ${goods}">
     <br/>
+    <div th:block th:if="${goods.getPhotoOfGood() != null}">
+        <img th:src="'data:image/jpeg;base64,' + ${goods.getPhotoOfGood()}" alt="Photo" width="100" height="110">
+    </div>
+    <br/>
     <div class="item">
         <span class="key">Goods:</span>
         <span class="value" th:text="${goods.getName()}"></span>
@@ -123,9 +127,7 @@
         <input type="submit" value="Buy" />
     </form>
 </div>
-<br/>
-<br/>
-<button onclick="back()">Back</button>
+
 <script>
 
     function basket() {
@@ -134,9 +136,9 @@
     function goods() {
         window.location.href = 'https://localhost:1000/find/goods';
     }
-    function back() {
-        window.location.href = 'https://localhost:1000/main';
-    }
+    // function back() {
+    //     window.location.href = 'https://localhost:1000/main';
+    // }
     function yourGoods() {
         window.location.href = 'https://localhost:1000/your/goods';
     }

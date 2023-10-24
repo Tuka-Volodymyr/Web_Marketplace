@@ -7,6 +7,7 @@ import com.stripe.exception.StripeException;
 import com.stripe.model.Charge;
 import com.stripe.param.ChargeCreateParams;
 import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -40,7 +41,7 @@ public class PurchaseController {
         return "redirect:/goods";
     }
     @GetMapping("/get/basket")
-    public String getBasket(Model model){
+    public String getBasket(Model model, HttpSession session){
         try {
             purchaseService.getBasket(model);
             return "goods/buy/basket";

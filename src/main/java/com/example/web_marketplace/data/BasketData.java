@@ -23,10 +23,14 @@ public class BasketData implements Data<Basket>{
         basketRepository.deleteAll(data);
 
     }
-    public Basket findByIds(Long idUser,Long idGood){
-        Optional<Basket> basket= basketRepository.findByIdUserAndIdGoods(idUser,idGood);
+
+    public List<Basket> findByGoodsId(long idGoods){
+       return basketRepository.findByIdGoods(idGoods);
+    }
+    public List<Basket> findByIds(Long idUser,Long idGood){
+        List<Basket> basket= basketRepository.findByIdUserAndIdGoods(idUser,idGood);
         if(basket.isEmpty())throw new BadRequestException("Goods don`t exist in basket!");
-        return basket.get();
+        return basket;
     }
     public List<Basket> findByUser(long idUser){
         return basketRepository.findByIdUser(idUser);

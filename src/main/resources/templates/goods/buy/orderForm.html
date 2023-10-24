@@ -111,9 +111,13 @@
 
     <br/>
     <div class="service-container">
+
         <br/>
         <h4>Service</h4>
         <div th:each="goods : ${goods}">
+            <div th:block th:if="${goods.getPhotoOfGood() != null}">
+                <img th:src="'data:image/jpeg;base64,' + ${goods.getPhotoOfGood()}" alt="Photo" width="60" height="65">
+            </div>
             <span class="key">Goods:</span>
             <span class="value" th:text="${goods.getName()}"></span>
             <br/>

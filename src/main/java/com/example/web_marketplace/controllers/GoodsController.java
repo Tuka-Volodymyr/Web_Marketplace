@@ -5,14 +5,21 @@ import com.example.web_marketplace.forms.FilterForm;
 import com.example.web_marketplace.forms.IdGoods;
 import com.example.web_marketplace.entities.Goods;
 import com.example.web_marketplace.service.GoodsService;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.awt.*;
+import java.io.IOException;
+import java.io.InputStream;
 
 @Controller
 @Data
@@ -27,15 +34,23 @@ public class GoodsController {
         return "goods/addGoods";
     }
 
-    @PostMapping("/add/goods")
-    public String addCommodity(@ModelAttribute("goods") @Valid Goods goods, BindingResult bindingResult){
-        if(bindingResult.hasErrors())return "goods/addGoods";
-        goodsService.addGoods(goods);
-        return "redirect:/your/goods";
+    @PostMapping(path = "/add/goods",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public String addCommodity(@ModelAttribute("goods") @Valid Goods goods, BindingResult bindingResult,Model model,@RequestParam(value = "file",required = false) MultipartFile file){
+        if(bindingResult.hasErrors()){
+            System.out.println(bindingResult.getFieldError());
+            return "goods/addGoods";
+        }
+        try {
+            goodsService.addGoods(goods,file);
+            return "redirect:/your/goods";
+        } catch (IOException e) {
+            model.addAttribute("error",e.getMessage());
+            return "redirect:/new/goods";
+        }
     }
 
     @PostMapping("/delete/goods")
-    public String deleteCommodity(@RequestParam("idGoods") long idGoods, Model model){
+    public String deleteCommodity(@RequestParam("idGoods") long idGoods, Model model, HttpSession session){
         try {
             goodsService.deleteGoods(idGoods);
             return "redirect:/your/goods";
