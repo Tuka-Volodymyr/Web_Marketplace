@@ -85,6 +85,8 @@
             <label>Rating:</label>
             <a th:text="${averageRating}"></a>
         </div>
+
+        <div th:if="${error}" class="error" th:text="${error}"></div>
     </div>
 </div>
 

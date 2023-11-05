@@ -126,6 +126,9 @@
         <input type="hidden" name="idGoods" th:value="${goods.idGood}" />
         <input type="submit" value="Buy" />
     </form>
+
+    <div th:if="${error}" class="error" th:text="${error}"></div>
+
 </div>
 
 <script>

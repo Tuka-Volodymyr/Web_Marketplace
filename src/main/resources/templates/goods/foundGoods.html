@@ -74,6 +74,8 @@
     <br/>
     <input type="submit" value="Find goods"/>
     <button onclick="back()">Back</button>
+    <div th:if="${error}" class="error" th:text="${error}"></div>
+
 </form>
 <br/>
 
