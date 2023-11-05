@@ -24,12 +24,14 @@ public class GoodsData implements Data<Goods>{
     }
     @Override
     public void delete(Goods goods) {
+
         goodsRepository.delete(goods);
     }
 
     public Goods findById(long id){
         Optional<Goods> goods= goodsRepository.findById(id);
-        return goods.orElse(null);
+        if(goods.isEmpty())throw new BadRequestException("Good isn`t exist");
+        return goods.get();
     }
     public List<Goods> findByMinPrice(long price, Sort sort){
         return goodsRepository.findByPriceGreaterThanEqual(price, sort);

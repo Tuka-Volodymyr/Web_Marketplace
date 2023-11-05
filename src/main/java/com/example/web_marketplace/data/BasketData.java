@@ -29,7 +29,7 @@ public class BasketData implements Data<Basket>{
     }
     public List<Basket> findByIds(Long idUser,Long idGood){
         List<Basket> basket= basketRepository.findByIdUserAndIdGoods(idUser,idGood);
-        if(basket.isEmpty())throw new BadRequestException("Goods don`t exist in basket!");
+//        if(basket.isEmpty())throw new BadRequestException("Goods don`t exist in basket!");
         return basket;
     }
     public List<Basket> findByUser(long idUser){

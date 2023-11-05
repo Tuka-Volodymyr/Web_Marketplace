@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "Сustom")
+@Table(name = "UserOrders")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,8 +22,11 @@ public class Order {
     private String name;
     private String email;
     private String phone;
-    @OneToMany
-    private List<Goods> service;
+    //зберігай не goods а фото і назву!!!
+
+//    private List<Goods> service;
+    @ElementCollection
+    private List<String> nameOfGood;
     private String city;
     private String postOffice;
     private String address;

@@ -2,11 +2,9 @@ package com.example.web_marketplace.entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-
-
 
 import org.springframework.format.annotation.NumberFormat;
 
@@ -18,6 +16,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Builder
 public class Goods {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,9 +35,10 @@ public class Goods {
     private long price;
 
 //    private boolean goodIsAvailable;
-    @Column(length = 10000000)
+
     private String photoOfGood;
-//    private byte[] photoOfGood;
+    @Column(length = 10000000)
+    private byte[] bytePhoto;
 
     private LocalDate localDate;
     private String userEmail;

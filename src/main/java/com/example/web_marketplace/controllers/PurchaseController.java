@@ -32,13 +32,25 @@ public class PurchaseController {
     }
     @GetMapping("/get/buy/menu")
     public String getMenu(@RequestParam("idGoods") long idGoods, Model model){
-        purchaseService.getBuyMenu(idGoods,model);
-        return "goods/buy/buyMenu";
+        try {
+            purchaseService.getBuyMenu(idGoods,model);
+            return "goods/buy/buyMenu";
+        }catch (Exception e){
+            model.addAttribute("error",e.getMessage());
+            return "goods/goods";
+        }
+
     }
     @GetMapping("/get/add/to/basket")
-    public String getGoodToBasket(@RequestParam("idGoods") long idGoods){
-        purchaseService.goodToBasket(idGoods);
-        return "redirect:/goods";
+    public String getGoodToBasket(@RequestParam("idGoods") long idGoods,Model model){
+        try {
+            purchaseService.goodToBasket(idGoods);
+            return "redirect:/goods";
+        }catch (Exception e){
+            model.addAttribute("error",e.getMessage());
+            return "goods/goods";
+        }
+
     }
     @GetMapping("/get/basket")
     public String getBasket(Model model, HttpSession session){
@@ -72,7 +84,6 @@ public class PurchaseController {
             model.addAttribute("error",e.getMessage());
             return "redirect:/get/basket";
         }
-
     }
     @Transactional
     @PostMapping("/buy")
@@ -128,8 +139,14 @@ public class PurchaseController {
 
     @GetMapping("/get/history/order")
     public String getHistoryOrder(Model model){
-        purchaseService.getHistoryOrder(model);
-        return "goods/buy/orderHistory";
+        try {
+            purchaseService.getHistoryOrder(model);
+            return "goods/buy/orderHistory";
+        }catch (Exception e){
+            model.addAttribute("error",e.getMessage());
+            return "account/yourAccount";
+        }
+
     }
 
 }

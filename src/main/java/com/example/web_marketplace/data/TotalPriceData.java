@@ -6,6 +6,7 @@ import com.example.web_marketplace.repositories.TotalPriceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -15,7 +16,9 @@ public class TotalPriceData implements Data<TotalPrice>{
     public TotalPriceData(TotalPriceRepository totalPriceRepository) {
         this.totalPriceRepository = totalPriceRepository;
     }
-
+    public void deleteList(List<TotalPrice> data) {
+        totalPriceRepository.deleteAll(data);
+    }
     @Override
     public void delete(TotalPrice data) {
         totalPriceRepository.delete(data);

@@ -35,7 +35,8 @@ public class GoodsController {
     }
 
     @PostMapping(path = "/add/goods",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public String addCommodity(@ModelAttribute("goods") @Valid Goods goods, BindingResult bindingResult,Model model,@RequestParam(value = "file",required = false) MultipartFile file){
+    public String addCommodity(@ModelAttribute("goods") @Valid Goods goods,
+                               BindingResult bindingResult,Model model,@RequestParam(value = "file",required = false) MultipartFile file){
         if(bindingResult.hasErrors()){
             System.out.println(bindingResult.getFieldError());
             return "goods/addGoods";
@@ -50,7 +51,7 @@ public class GoodsController {
     }
 
     @PostMapping("/delete/goods")
-    public String deleteCommodity(@RequestParam("idGoods") long idGoods, Model model, HttpSession session){
+    public String deleteCommodity(@RequestParam("idGoods") long idGoods, Model model){
         try {
             goodsService.deleteGoods(idGoods);
             return "redirect:/your/goods";
@@ -62,8 +63,14 @@ public class GoodsController {
     }
     @GetMapping("/your/goods")
     public String getYourGoods(Model model){
-        goodsService.getYourGoods(model);
-        return "goods/getYourGoods";
+        try {
+            goodsService.getYourGoods(model);
+            return "goods/getYourGoods";
+        }catch (Exception e){
+            model.addAttribute("error",e.getMessage());
+            return "account/yourAccount";
+        }
+
     }
     @GetMapping ("/find/goods")
     public String findGoods(@ModelAttribute("filterForm") FilterForm filterForm){
@@ -72,10 +79,15 @@ public class GoodsController {
 
     @PostMapping("get/found/goods")
     public String getCommodityByCategory(@ModelAttribute("filterForm") FilterForm filterForm, Model model){
-        if(filterForm.getCategory().isBlank()&&filterForm.getMaxPrice()<=filterForm.getMinPrice()&&filterForm.getMaxPrice()!=0)
-            return "redirect:/goods";
-        goodsService.getFoundGoodsWithFilter(model, filterForm);
-        return "goods/goods";
+        try {
+            if(filterForm.getCategory().isBlank()&&filterForm.getMaxPrice()<=filterForm.getMinPrice())
+                return "redirect:/goods";
+            goodsService.getFoundGoodsWithFilter(model, filterForm);
+            return "goods/goods";
+        }catch (Exception e){
+            model.addAttribute("error",e.getMessage());
+            return "goods/foundGoods";
+        }
     }
     @GetMapping("/get/sortGoods/decrease")
     public String getSortGoodsDecrease(Model model){
@@ -84,8 +96,14 @@ public class GoodsController {
     }
     @GetMapping("/goods")
     public String goods(Model model){
-        goodsService.getGoods(model);
-        return "goods/goods";
+        try {
+            goodsService.getGoods(model);
+            return "goods/goods";
+        }catch (Exception e){
+            model.addAttribute("error",e.getMessage());
+            return "goods/goods";
+        }
+
     }
 
 }
