@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Edit Good</title>
+    <link rel="stylesheet" href="path/to/your/css/file.css"> <!-- Add the path to your CSS file here -->
+</head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 400px;
+        margin: 50px auto;
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        text-align: left; /* Align text to the left within the form */
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    input[type="text"], input[type="number"] {
+        width: calc(100% - 22px); /* Adjusted for padding */
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    input[type="file"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    .button-container {
+        text-align: center; /* Center the buttons within the container */
+    }
+
+    input[type="submit"], button {
+        font-size: 16px;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin-top: 10px;
+        display: inline-block; /* Make buttons appear in one line */
+    }
+
+    input[type="submit"]:hover, button:hover {
+        background-color: #0056b3;
+    }
+
+    .error {
+        color: #ff0000;
+    }
+
+</style>
+<body>
+
+<div class="container">
+    <form action="#" th:action="@{/redact/good}" th:object="${good}" method="post" enctype="multipart/form-data">
+
+        <input type="hidden" th:field="*{idGood}" th:value="${good.idGood}" />
+        <input type="hidden" th:field="*{userEmail}" th:value="${good.userEmail}" />
+        <input type="hidden" th:field="*{localDate}" th:value="${good.localDate}" />
+        <input type="hidden" th:field="*{bytePhoto}" th:value="${good.bytePhoto}" />
+
+        <div class="form-group">
+            <label>Name:</label>
+            <input type="text" th:field="*{name}" th:value="${good.name}" />
+            <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="error"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Description:</label>
+            <input type="text" th:field="*{description}" th:value="${good.description}" />
+            <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="error"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Category:</label>
+            <input type="text" th:field="*{category}" th:value="${good.category}" />
+            <span th:if="${#fields.hasErrors('category')}" th:errors="*{category}" class="error"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Price:</label>
+            <input type="text" th:field="*{price}" th:value="${good.price}" />
+            <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="error"></span>
+        </div>
+
+        <!-- Add fields for other properties of Goods as needed -->
+
+        <div class="form-group">
+            <label>Photo:</label>
+            <input type="file" name="file" accept="image/*" />
+        </div>
+
+        <div class="button-container">
+            <button type="submit">Edit</button>
+            <button onclick="back()">Back</button>
+        </div>
+
+    </form>
+
+    <div th:if="${error}" class="error" th:text="${error}"></div>
+</div>
+
+</body>
+<script>
+    function back() {
+        window.location.href = 'https://localhost:1000/your/goods';
+    }
+</script>
+</html>

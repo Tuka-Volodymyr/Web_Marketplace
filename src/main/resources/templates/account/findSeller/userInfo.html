@@ -164,6 +164,7 @@
         <label>Data:</label>
         <a th:text="${goods.getLocalDate()}">Goods</a>
     </div>
+    <div th:if="${error}" class="error" th:text="${error}"></div>
 </div>
 
 

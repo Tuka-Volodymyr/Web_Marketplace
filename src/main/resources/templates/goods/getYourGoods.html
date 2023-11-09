@@ -64,6 +64,18 @@
             margin-top: 10px;
         }
 
+        .edit-button {
+            background-color: #0056b3; /* Червоний колір */
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .edit-button:hover {
+            background-color: #c82333; /* Темно-червоний колір при наведенні */
+        }
+
         .delete-button {
             background-color: #dc3545; /* Червоний колір */
             color: #fff;
@@ -131,12 +143,17 @@
         <span th:text="${goods.getLocalDate()}"></span>
     </div>
 
-    <form th:method="POST" th:action="@{/delete/goods}">
-        <input type="hidden" name="idGoods" th:value="${goods.idGood}" />
-        <div th:if="${error}" class="error-message" th:text="${error}"></div>
-        <br/>
-        <input type="submit" value="Delete" class="delete-button"/> <!-- Додано клас delete-button -->
-    </form>
+    <div class="button-container">
+        <form th:method="POST" th:action="@{/delete/goods}" style="display: inline-block;">
+            <input type="hidden" name="idGoods" th:value="${goods.idGood}" />
+            <input type="submit" value="Delete" class="delete-button"/>
+        </form>
+
+        <form th:method="GET" th:action="@{/get/redact/good}" style="display: inline-block;">
+            <input type="hidden" name="idGoods" th:value="${goods.idGood}" />
+            <input type="submit" value="Edit" class="edit-button"/>
+        </form>
+    </div>
 </div>
 
 <br/>

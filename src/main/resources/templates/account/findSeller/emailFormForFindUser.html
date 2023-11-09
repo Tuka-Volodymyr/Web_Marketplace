@@ -77,13 +77,18 @@
 </div>
 
 <h1>Web Marketplace</h1>
+
 <form th:method="POST" th:action="@{/find/user}" th:object="${emailForm}">
-    <label for="email">Enter email of seller:</label>
-    <input type="text" th:field="*{email}" id="email"/>
-    <div style="color: brown" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Error</div>
-    <div th:if="${error}" class="error" th:text="${error}"></div>
-    <br/>
-    <input type="submit" value="Find seller"/>
+<!--    <br/>-->
+<!--    <div th:block th:if="${emailForm.getEmail() == null}">-->
+        <label for="email">Enter email of seller:</label>
+        <input type="text" th:field="*{email}" id="email"/>
+        <div style="color: brown" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Error</div>
+        <div th:if="${error}" class="error" th:text="${error}"></div>
+        <br/>
+        <input type="submit" value="Find seller"/>
+<!--    </div>-->
+
 
 </form>
 <br/>
