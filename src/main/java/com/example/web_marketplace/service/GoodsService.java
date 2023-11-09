@@ -7,6 +7,7 @@ import com.example.web_marketplace.forms.FilterForm;
 import com.example.web_marketplace.entities.Goods;
 import com.example.web_marketplace.entities.User;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -67,7 +68,7 @@ public class GoodsService {
         }
         model.addAttribute("goods",list);
     }
-    public void getFoundGoodsWithFilter(Model model, FilterForm filter){
+    public void getFoundGoodsWithFilter(Model model, FilterForm filter, HttpSession session){
         List<Goods> goodsList=new ArrayList<>();
         if (!filter.getCategory().isBlank() && filter.getMaxPrice()> filter.getMinPrice()) {
             goodsList=goodsData.findByMinPriceAndCategoryAndMaxPrice(filter,sort);
@@ -82,6 +83,7 @@ public class GoodsService {
             String base64Image = Base64.getEncoder().encodeToString(good.getBytePhoto());
             good.setPhotoOfGood(base64Image);
         }
+        session.setAttribute("filter",filter);
         model.addAttribute("goods",goodsList);
     }
     public void getSortDecreaseByPrice(Model model){
@@ -90,6 +92,19 @@ public class GoodsService {
     public void getSortIncreaseByPrice(Model model){
 
     }
+    public void getRedactGood(Long idGood,Model model){
+        Goods good=goodsData.findById(idGood);
+        model.addAttribute("good",good);
+    }
+    public void redactGood(Goods goods,MultipartFile multipartFile) throws IOException {
+        if(!multipartFile.isEmpty()){
+            byte[] photoBytes = multipartFile.getBytes();
+
+            goods.setBytePhoto(photoBytes);
+        }
+        goodsData.save(goods);
+    }
+
     public static UserDetails getUserDetails() {
         return (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }

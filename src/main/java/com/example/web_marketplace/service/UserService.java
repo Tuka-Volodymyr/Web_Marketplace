@@ -4,6 +4,7 @@ import com.example.web_marketplace.data.CodeData;
 import com.example.web_marketplace.data.GoodsData;
 import com.example.web_marketplace.data.RatingData;
 import com.example.web_marketplace.data.UserData;
+import com.example.web_marketplace.entities.Goods;
 import com.example.web_marketplace.entities.Rating;
 import com.example.web_marketplace.forms.ChangePass;
 import com.example.web_marketplace.entities.Code;
@@ -78,8 +79,7 @@ public class UserService {
         rating.ifPresent(value -> model.addAttribute("averageRating", value.averageRating()));
         if(rating.isEmpty())model.addAttribute("averageRating",0);
     }
-    public void evaluate(Rating rating,HttpSession session){
-
+    public void evaluate(Rating rating,HttpSession session,Model model){
         rating.setIdSeller((Long) session.getAttribute("idSeller"));
         Optional<Rating> sellerRating=ratingData.findBySeller(rating.getIdSeller());
         if(sellerRating.isPresent()){
@@ -88,10 +88,14 @@ public class UserService {
         }else {
             Map<Long, Integer> map=new TreeMap<>();
             map.put(userData.findByEmail(getUserDetails().getUsername()).getIdUser(),rating.getLastRating());
-            map.put(userData.findByEmail(getUserDetails().getUsername()).getIdUser(),rating.getLastRating());
-            map.put(userData.findByEmail(getUserDetails().getUsername()).getIdUser(),rating.getLastRating());
+
             rating.setRating(map);
             ratingData.save(rating);
         }
+        User user=userData.findById(rating.getIdSeller());
+        infoOfUser(user.getEmail(),model,session);
+        goodsToAttribute(model, user.getEmail());
+        ratingToAttribute(model,user.getEmail());
     }
+
 }

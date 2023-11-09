@@ -70,19 +70,25 @@ public class GoodsController {
             model.addAttribute("error",e.getMessage());
             return "account/yourAccount";
         }
-
     }
     @GetMapping ("/find/goods")
-    public String findGoods(@ModelAttribute("filterForm") FilterForm filterForm){
+    public String findGoods(@ModelAttribute("filterForm") FilterForm filterForm,HttpSession session,Model model){
+        filterForm.setMaxPrice(999999);
+        if(session.getAttribute("filter")!=null){
+            FilterForm filter=(FilterForm) session.getAttribute("filter");
+            filterForm.setCategory(filter.getCategory());
+            filterForm.setMinPrice(filter.getMinPrice());
+            filterForm.setMaxPrice(filter.getMaxPrice());
+        }
         return "goods/foundGoods";
     }
 
     @PostMapping("get/found/goods")
-    public String getCommodityByCategory(@ModelAttribute("filterForm") FilterForm filterForm, Model model){
+    public String getCommodityByCategory(@ModelAttribute("filterForm") FilterForm filterForm, Model model,HttpSession session){
         try {
             if(filterForm.getCategory().isBlank()&&filterForm.getMaxPrice()<=filterForm.getMinPrice())
                 return "redirect:/goods";
-            goodsService.getFoundGoodsWithFilter(model, filterForm);
+            goodsService.getFoundGoodsWithFilter(model, filterForm,session);
             return "goods/goods";
         }catch (Exception e){
             model.addAttribute("error",e.getMessage());
@@ -103,7 +109,28 @@ public class GoodsController {
             model.addAttribute("error",e.getMessage());
             return "goods/goods";
         }
-
     }
+    @GetMapping("/get/redact/good")
+    private String getRedactGood(@RequestParam("idGoods") long idGoods, Model model){
+        goodsService.getRedactGood(idGoods,model);
+        return "goods/redactGood";
+    }
+    @PostMapping(path = "/redact/good",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    private String redactGood(@ModelAttribute("good") @Valid Goods good,
+                              BindingResult bindingResult,Model model,
+                              @RequestParam(value = "file",required = false) MultipartFile file){
+        try {
+            if(bindingResult.hasErrors()){
+                System.out.println(bindingResult.getFieldError());
+                return "goods/redactGood";
+            }
+            goodsService.redactGood(good,file);
+            return "redirect:/your/goods";
+        }catch (Exception e){
+            model.addAttribute("error",e.getMessage());
+            return "goods/redactGood";
+        }
+    }
+
 
 }

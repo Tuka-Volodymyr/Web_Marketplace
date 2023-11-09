@@ -67,7 +67,7 @@ public class UserController {
             return "account/findSeller/userInfo";
         } catch (BadRequestException e) {
             model.addAttribute("error", e.getMessage());
-            return "account/findSeller/emailFormForFindUser";
+                return "account/findSeller/emailFormForFindUser";
         }
 
     }
@@ -95,7 +95,6 @@ public class UserController {
             model.addAttribute("error", e.getMessage());
             return "account/changePassword/emailFormForChangePass";
         }
-
     }
     @GetMapping("/get/check/code")
     public String getCheckCode(@ModelAttribute("code") Code code){
@@ -150,8 +149,14 @@ public class UserController {
     }
 
     @PostMapping("/evaluate")
-    public String evaluate(@ModelAttribute("rating") Rating rating, HttpSession session){
-        userService.evaluate(rating,session);
-        return "redirect:/get/user";
+    public String evaluate(@ModelAttribute("rating") Rating rating, HttpSession session,Model model){
+        try {
+            userService.evaluate(rating,session,model);
+            return "account/findSeller/userInfo";
+        }catch(Exception e){
+            model.addAttribute("error",e.getMessage());
+            return "account/findSeller/emailFormForFindUser";
+        }
+
     }
 }
