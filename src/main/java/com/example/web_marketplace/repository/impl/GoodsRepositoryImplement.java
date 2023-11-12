@@ -1,10 +1,9 @@
-package com.example.web_marketplace.data;
+package com.example.web_marketplace.repository.impl;
 
 import com.example.web_marketplace.exceptions.BadRequestException;
-import com.example.web_marketplace.forms.FilterForm;
-import com.example.web_marketplace.entities.Goods;
-import com.example.web_marketplace.exceptions.GoodsNotFoundException;
-import com.example.web_marketplace.repositories.GoodsRepository;
+import com.example.web_marketplace.model.dto.FilterDto;
+import com.example.web_marketplace.model.entities.Goods;
+import com.example.web_marketplace.repository.GoodsRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
@@ -12,17 +11,17 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-public class GoodsData implements Data<Goods>{
+public class GoodsRepositoryImplement {
     private final GoodsRepository goodsRepository;
 
-    public GoodsData(GoodsRepository goodsRepository) {
+    public GoodsRepositoryImplement(GoodsRepository goodsRepository) {
         this.goodsRepository = goodsRepository;
     }
-    @Override
-    public void save(Goods goods) {
+
+    public Object save(Goods goods) {
         goodsRepository.save(goods);
+        return null;
     }
-    @Override
     public void delete(Goods goods) {
 
         goodsRepository.delete(goods);
@@ -33,20 +32,21 @@ public class GoodsData implements Data<Goods>{
         if(goods.isEmpty())throw new BadRequestException("Good isn`t exist");
         return goods.get();
     }
+
     public List<Goods> findByMinPrice(long price, Sort sort){
         return goodsRepository.findByPriceGreaterThanEqual(price, sort);
     }
 
-    public List<Goods> findByMinPriceAndMax(FilterForm filterForm, Sort sort){
-        return goodsRepository.findByPriceGreaterThanEqualAndPriceLessThanEqual(filterForm.getMinPrice(),filterForm.getMaxPrice(), sort);
+    public List<Goods> findByMinPriceAndMax(FilterDto filterDto, Sort sort){
+        return goodsRepository.findByPriceGreaterThanEqualAndPriceLessThanEqual(filterDto.getMinPrice(), filterDto.getMaxPrice(), sort);
     }
-    public List<Goods> findByMinPriceAndCategory(FilterForm filter, Sort sort){
+    public List<Goods> findByMinPriceAndCategory(FilterDto filter, Sort sort){
         return goodsRepository
                 .findByCategoryAndPriceGreaterThanEqual(filter.getCategory(),filter.getMinPrice(), sort);
     }
 
 
-    public List<Goods> findByMinPriceAndCategoryAndMaxPrice(FilterForm filter, Sort sort){
+    public List<Goods> findByMinPriceAndCategoryAndMaxPrice(FilterDto filter, Sort sort){
         return goodsRepository
                 .findByCategoryAndPriceGreaterThanEqualAndPriceLessThanEqual(filter.getCategory(),filter.getMinPrice(),filter.getMaxPrice(),sort);
     }

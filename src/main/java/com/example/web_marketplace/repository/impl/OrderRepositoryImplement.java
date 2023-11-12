@@ -1,23 +1,22 @@
-package com.example.web_marketplace.data;
+package com.example.web_marketplace.repository.impl;
 
-import com.example.web_marketplace.entities.Order;
-import com.example.web_marketplace.repositories.OrderRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.web_marketplace.model.entities.Order;
+import com.example.web_marketplace.repository.OrderRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
-public class OrderData implements Data<Order>{
+public class OrderRepositoryImplement {
     private final OrderRepository orderRepository;
 
-    public OrderData(OrderRepository orderRepository) {
+    public OrderRepositoryImplement(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
     }
 
 
-    @Override
+
     public void delete(Order data) {
 
     }
@@ -25,7 +24,7 @@ public class OrderData implements Data<Order>{
         return orderRepository.findByIdBuyerAccount(idAccount,sort);
     }
 
-    @Override
+
     public void save(Order data) {
         orderRepository.save(data);
     }

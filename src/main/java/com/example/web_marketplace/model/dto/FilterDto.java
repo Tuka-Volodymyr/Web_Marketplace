@@ -1,4 +1,4 @@
-package com.example.web_marketplace.forms;
+package com.example.web_marketplace.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class FilterForm {
+public class FilterDto {
     private String category;
     private long minPrice;
     private long maxPrice;

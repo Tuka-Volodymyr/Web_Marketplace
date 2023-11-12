@@ -2,51 +2,28 @@ package com.example.web_marketplace.controller;
 
 import com.example.web_marketplace.controllers.GoodsController;
 import com.example.web_marketplace.controllers.UserController;
-import com.example.web_marketplace.data.GoodsData;
-import com.example.web_marketplace.data.UserData;
-import com.example.web_marketplace.entities.Goods;
+import com.example.web_marketplace.repository.impl.GoodsRepositoryImplement;
+import com.example.web_marketplace.model.entities.Goods;
 
-import com.example.web_marketplace.entities.User;
-import com.example.web_marketplace.forms.FilterForm;
+import com.example.web_marketplace.model.dto.FilterDto;
 import com.example.web_marketplace.service.GoodsService;
-import org.aspectj.lang.annotation.AfterReturning;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.runner.RunWith;
-import static org.hamcrest.Matchers.containsString;
 
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.content;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnitRunner;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.security.core.parameters.P;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.event.annotation.AfterTestExecution;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.ConcurrentModel;
-import org.springframework.ui.Model;
-import org.springframework.validation.BeanPropertyBindingResult;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.multipart.MultipartFile;
-import org.thymeleaf.spring6.expression.Mvc;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -70,7 +47,7 @@ public class GoodsControllerTest {
     private UserController userController;
 
     @Autowired
-    private GoodsData goodsData;
+    private GoodsRepositoryImplement goodsRepositoryImplement;
 
 
 //    Goods goodSuccess=new Goods(99L,"Tuka","22 year","people",3000,null,null,LocalDate.ofEpochDay(2023- 6 -23),"tuka@gmail.com");
@@ -139,7 +116,7 @@ public class GoodsControllerTest {
 
     @AfterAll
     public void deleteCommodity_success() throws Exception {
-        List<Goods> good=goodsData.findByEmail("user", GoodsService.sort);
+        List<Goods> good= goodsRepositoryImplement.findByEmail("user", GoodsService.sort);
         for(Goods someGood:good){
             mockMvc.perform(MockMvcRequestBuilders.post("/delete/goods")
                             .param("idGoods", String.valueOf(someGood.getIdGood())))
@@ -159,23 +136,23 @@ public class GoodsControllerTest {
 
     @Test
     public void getCommodityByCategory_success() throws Exception {
-        FilterForm filterForm=FilterForm.builder()
+        FilterDto filterDto = FilterDto.builder()
                 .category("technic")
                 .build();
         mockMvc.perform(MockMvcRequestBuilders.post("/get/found/goods")
-                        .flashAttr("filterForm", filterForm))
+                        .flashAttr("filterDto", filterDto))
 //                .andDo(print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name("goods/goods"));
     }
     @Test
     public void getCommodityByCategory_fail() throws Exception {
-        FilterForm filterForm=FilterForm.builder()
+        FilterDto filterDto = FilterDto.builder()
                 .maxPrice(100)
                 .minPrice(2000)
                 .build();
         mockMvc.perform(MockMvcRequestBuilders.post("/get/found/goods")
-                        .flashAttr("filterForm", filterForm))
+                        .flashAttr("filterForm", filterDto))
                 .andDo(print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name("goods/foundGoods"));

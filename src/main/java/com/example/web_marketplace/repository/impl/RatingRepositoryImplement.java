@@ -1,27 +1,25 @@
-package com.example.web_marketplace.data;
+package com.example.web_marketplace.repository.impl;
 
-import com.example.web_marketplace.entities.Rating;
-import com.example.web_marketplace.repositories.RatingRepository;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.web_marketplace.model.entities.Rating;
+import com.example.web_marketplace.repository.RatingRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
 @Component
-public class RatingData implements Data<Rating> {
+public class RatingRepositoryImplement {
     private final RatingRepository repository;
 
-    public RatingData(RatingRepository repository) {
+    public RatingRepositoryImplement(RatingRepository repository) {
         this.repository = repository;
     }
 
-    @Override
+
     public void delete(Rating data) {
 
     }
 
-    @Override
+
     public void save(Rating data) {
         repository.save(data);
     }

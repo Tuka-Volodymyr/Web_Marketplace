@@ -1,11 +1,8 @@
 package com.example.web_marketplace.controllers;
 
-import com.example.web_marketplace.entities.Order;
+import com.example.web_marketplace.model.entities.Order;
 import com.example.web_marketplace.service.PurchaseService;
 import com.stripe.Stripe;
-import com.stripe.exception.StripeException;
-import com.stripe.model.Charge;
-import com.stripe.param.ChargeCreateParams;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
@@ -30,7 +27,7 @@ public class PurchaseController {
     public void init() {
         Stripe.apiKey = secretKey;
     }
-    @GetMapping("/get/buy/menu")
+        @GetMapping("/get/buy/menu")
     public String getMenu(@RequestParam("idGoods") long idGoods, Model model){
         try {
             purchaseService.getBuyMenu(idGoods,model);

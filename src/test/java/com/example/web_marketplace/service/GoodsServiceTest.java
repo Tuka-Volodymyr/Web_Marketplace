@@ -1,25 +1,24 @@
 package com.example.web_marketplace.service;
 
 
-import com.example.web_marketplace.data.GoodsData;
-import com.example.web_marketplace.data.UserData;
+import com.example.web_marketplace.repository.impl.GoodsRepositoryImplement;
+import com.example.web_marketplace.repository.impl.UserRepositoryImplement;
 import org.junit.Before;
-import org.springframework.context.annotation.Bean;
 
 import static org.mockito.Mockito.mock;
 
 public class GoodsServiceTest {
     private GoodsService goodsService;
 
-    private GoodsData goodsDataMock;
-    private UserData userDataMock;
+    private GoodsRepositoryImplement goodsRepositoryImplementMock;
+    private UserRepositoryImplement userRepositoryImplementMock;
     private PurchaseService purchaseServiceMock;
     @Before
     public void setUp(){
-        goodsDataMock=mock(GoodsData.class);
-        userDataMock=mock(UserData.class);
+        goodsRepositoryImplementMock =mock(GoodsRepositoryImplement.class);
+        userRepositoryImplementMock =mock(UserRepositoryImplement.class);
         purchaseServiceMock=mock(PurchaseService.class);
-        goodsService=new GoodsService(goodsDataMock,userDataMock,purchaseServiceMock);
+        goodsService=new GoodsService(goodsRepositoryImplementMock, userRepositoryImplementMock,purchaseServiceMock);
     }
 
 }

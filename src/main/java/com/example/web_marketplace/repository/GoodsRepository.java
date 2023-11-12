@@ -1,9 +1,8 @@
-package com.example.web_marketplace.repositories;
+package com.example.web_marketplace.repository;
 
-import com.example.web_marketplace.entities.Goods;
+import com.example.web_marketplace.model.entities.Goods;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -13,11 +12,11 @@ import java.util.Optional;
 public interface GoodsRepository extends JpaRepository<Goods,Long> {
 
 
-    List<Goods> findByCategory(String category);
+//    List<Goods> findByCategory(String category);
     List<Goods> findByPriceGreaterThanEqual(long minPrice, Sort sort);
-    List<Goods> findByPriceLessThanEqual(long maxPrice);
+//    List<Goods> findByPriceLessThanEqual(long maxPrice);
     List<Goods> findByPriceGreaterThanEqualAndPriceLessThanEqual(long minPrice,long maxPrice, Sort sort);
-    List<Goods> findByCategoryAndPriceLessThanEqual(String category,long maxPrice);
+//    List<Goods> findByCategoryAndPriceLessThanEqual(String category,long maxPrice);
     List<Goods> findByUserEmail(String category, Sort sort);
 
     Optional<Goods> findTopByOrderByIdGoodDesc();

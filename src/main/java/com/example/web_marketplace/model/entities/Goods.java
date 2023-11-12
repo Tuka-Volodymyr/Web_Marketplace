@@ -1,4 +1,4 @@
-package com.example.web_marketplace.entities;
+package com.example.web_marketplace.model.entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;

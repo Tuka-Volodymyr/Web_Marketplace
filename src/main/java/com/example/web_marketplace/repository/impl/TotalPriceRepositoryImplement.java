@@ -1,30 +1,29 @@
-package com.example.web_marketplace.data;
+package com.example.web_marketplace.repository.impl;
 
-import com.example.web_marketplace.entities.TotalPrice;
+import com.example.web_marketplace.model.entities.TotalPrice;
 import com.example.web_marketplace.exceptions.BadRequestException;
-import com.example.web_marketplace.repositories.TotalPriceRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.web_marketplace.repository.TotalPriceRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 
 @Component
-public class TotalPriceData implements Data<TotalPrice>{
+public class TotalPriceRepositoryImplement {
     private final TotalPriceRepository totalPriceRepository;
 
-    public TotalPriceData(TotalPriceRepository totalPriceRepository) {
+    public TotalPriceRepositoryImplement(TotalPriceRepository totalPriceRepository) {
         this.totalPriceRepository = totalPriceRepository;
     }
     public void deleteList(List<TotalPrice> data) {
         totalPriceRepository.deleteAll(data);
     }
-    @Override
+
     public void delete(TotalPrice data) {
         totalPriceRepository.delete(data);
     }
 
-    @Override
+
     public void save(TotalPrice data) {
         totalPriceRepository.save(data);
     }

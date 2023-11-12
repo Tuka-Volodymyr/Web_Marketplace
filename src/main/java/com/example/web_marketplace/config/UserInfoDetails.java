@@ -1,6 +1,6 @@
 package com.example.web_marketplace.config;
 
-import com.example.web_marketplace.entities.User;
+import com.example.web_marketplace.model.entities.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

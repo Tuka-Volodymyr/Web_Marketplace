@@ -1,6 +1,5 @@
-package com.example.web_marketplace.forms;
+package com.example.web_marketplace.model.dto;
 
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ChangePass {
+public class ChangePassDto {
 
     private String email;
     @NotBlank(message = "Password should not be blank!")

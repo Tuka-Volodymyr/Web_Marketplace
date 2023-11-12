@@ -1,11 +1,9 @@
 package com.example.web_marketplace.service;
 
-import com.example.web_marketplace.data.BasketData;
-import com.example.web_marketplace.data.GoodsData;
-import com.example.web_marketplace.data.UserData;
-import com.example.web_marketplace.forms.FilterForm;
-import com.example.web_marketplace.entities.Goods;
-import com.example.web_marketplace.entities.User;
+import com.example.web_marketplace.repository.impl.GoodsRepositoryImplement;
+import com.example.web_marketplace.repository.impl.UserRepositoryImplement;
+import com.example.web_marketplace.model.dto.FilterDto;
+import com.example.web_marketplace.model.entities.Goods;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -26,8 +24,8 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class GoodsService {
-    private final GoodsData goodsData;
-    private final UserData userData;
+    private final GoodsRepositoryImplement goodsRepositoryImplement;
+    private final UserRepositoryImplement userRepositoryImplement;
     private final PurchaseService purchaseService;
 
     public static final Sort sort = Sort.by(Sort.Direction.ASC, "price");
@@ -40,19 +38,19 @@ public class GoodsService {
 
             goods.setBytePhoto(photoBytes);
         }
-        goodsData.save(goods);
+        goodsRepositoryImplement.save(goods);
     }
     public void deleteGoods(long idGoods){
-        Goods goods=goodsData.findById(idGoods);
+        Goods goods= goodsRepositoryImplement.findById(idGoods);
         //Має удаляти у всіх клієнтів!!
 //        purchaseService.deleteGoods(goods.getIdGood());
         purchaseService.deleteGoodsFromEachBasket(idGoods);
-        goodsData.delete(goods);
+        goodsRepositoryImplement.delete(goods);
 
 
     }
     public void getGoods(Model model){
-        List<Goods> goodsList=goodsData.findAll(sort);
+        List<Goods> goodsList= goodsRepositoryImplement.findAll(sort);
         for(Goods good:goodsList){
             String base64Image = Base64.getEncoder().encodeToString(good.getBytePhoto());
             good.setPhotoOfGood(base64Image);
@@ -61,23 +59,23 @@ public class GoodsService {
     }
     public void getYourGoods(Model model){
         UserDetails userDetails=getUserDetails();
-        List<Goods> list=goodsData.findByEmail(userDetails.getUsername(),sort);
+        List<Goods> list= goodsRepositoryImplement.findByEmail(userDetails.getUsername(),sort);
         for(Goods good:list){
             String base64Image = Base64.getEncoder().encodeToString(good.getBytePhoto());
             good.setPhotoOfGood(base64Image);
         }
         model.addAttribute("goods",list);
     }
-    public void getFoundGoodsWithFilter(Model model, FilterForm filter, HttpSession session){
+    public void getFoundGoodsWithFilter(Model model, FilterDto filter, HttpSession session){
         List<Goods> goodsList=new ArrayList<>();
         if (!filter.getCategory().isBlank() && filter.getMaxPrice()> filter.getMinPrice()) {
-            goodsList=goodsData.findByMinPriceAndCategoryAndMaxPrice(filter,sort);
+            goodsList= goodsRepositoryImplement.findByMinPriceAndCategoryAndMaxPrice(filter,sort);
         }else if (!filter.getCategory().isBlank() ) {
-            goodsList=goodsData.findByMinPriceAndCategory(filter,sort);
+            goodsList= goodsRepositoryImplement.findByMinPriceAndCategory(filter,sort);
         } else if (filter.getMaxPrice() > filter.getMinPrice()) {
-            goodsList=goodsData.findByMinPriceAndMax(filter,sort);
+            goodsList= goodsRepositoryImplement.findByMinPriceAndMax(filter,sort);
         }else if (filter.getMinPrice() > 0){
-            goodsList=goodsData.findByMinPrice(filter.getMinPrice(),sort);
+            goodsList= goodsRepositoryImplement.findByMinPrice(filter.getMinPrice(),sort);
         }
         for(Goods good:goodsList){
             String base64Image = Base64.getEncoder().encodeToString(good.getBytePhoto());
@@ -93,7 +91,7 @@ public class GoodsService {
 
     }
     public void getRedactGood(Long idGood,Model model){
-        Goods good=goodsData.findById(idGood);
+        Goods good= goodsRepositoryImplement.findById(idGood);
         model.addAttribute("good",good);
     }
     public void redactGood(Goods goods,MultipartFile multipartFile) throws IOException {
@@ -102,7 +100,7 @@ public class GoodsService {
 
             goods.setBytePhoto(photoBytes);
         }
-        goodsData.save(goods);
+        goodsRepositoryImplement.save(goods);
     }
 
     public static UserDetails getUserDetails() {

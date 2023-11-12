@@ -68,7 +68,7 @@
 </head>
 <body>
 <h1>Change password</h1>
-<form th:method="POST" th:action="@{/send/code}" th:object="${emailForm}">
+<form th:method="POST" th:action="@{/send/code}" th:object="${emailDto}">
     <br/>
     <label for="email">Enter your email: </label>
     <input type="text" th:field="*{email}" id="email"/>

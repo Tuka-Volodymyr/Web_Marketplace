@@ -82,14 +82,14 @@
     <div class="error" th:if="${param.error}">Invalid username or password</div>
     <div class="button-group">
         <button type="submit">Login</button>
-        <button onclick="changePass()">Forgot password</button>
+        <button onclick="changePassDto()">Forgot password</button>
     </div>
 </form>
 
 
 <!--<button onclick="back()">Back</button>-->
 <script>
-    function changePass() {
+    function changePassDto() {
         window.location.href = 'https://localhost:1000/get/send/code';
     }
     function register() {

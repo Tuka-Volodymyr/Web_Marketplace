@@ -1,20 +1,16 @@
-package com.example.web_marketplace.data;
+package com.example.web_marketplace.repository.impl;
 
-import com.example.web_marketplace.entities.Basket;
-import com.example.web_marketplace.entities.Goods;
-import com.example.web_marketplace.exceptions.BadRequestException;
-import com.example.web_marketplace.repositories.BasketRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.web_marketplace.model.entities.Basket;
+import com.example.web_marketplace.repository.BasketRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Optional;
 
 @Component
-public class BasketData implements Data<Basket>{
+public class BasketRepositoryImplement {
     private final BasketRepository basketRepository;
 
-    public BasketData(BasketRepository basketRepository) {
+    public BasketRepositoryImplement(BasketRepository basketRepository) {
         this.basketRepository = basketRepository;
     }
 
@@ -36,12 +32,12 @@ public class BasketData implements Data<Basket>{
         return basketRepository.findByIdUser(idUser);
     }
 
-    @Override
+
     public void delete(Basket data) {
         basketRepository.delete(data);
     }
 
-    @Override
+
     public void save(Basket data) {
         basketRepository.save(data);
     }

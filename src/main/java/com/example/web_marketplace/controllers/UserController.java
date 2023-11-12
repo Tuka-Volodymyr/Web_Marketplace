@@ -1,18 +1,17 @@
 package com.example.web_marketplace.controllers;
 
-import com.example.web_marketplace.entities.Rating;
+import com.example.web_marketplace.model.entities.Rating;
 import com.example.web_marketplace.exceptions.BadRequestException;
-import com.example.web_marketplace.forms.ChangePass;
-import com.example.web_marketplace.forms.EmailForm;
-import com.example.web_marketplace.entities.Code;
-import com.example.web_marketplace.entities.User;
+import com.example.web_marketplace.model.dto.ChangePassDto;
+import com.example.web_marketplace.model.dto.EmailDto;
+import com.example.web_marketplace.model.entities.Code;
+import com.example.web_marketplace.model.entities.User;
 import com.example.web_marketplace.service.GoodsService;
 import com.example.web_marketplace.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -52,13 +51,13 @@ public class UserController {
 
     }
     @GetMapping("/get/user")
-    public String getInfoSeller(@ModelAttribute("emailForm") EmailForm email){
+    public String getInfoSeller(@ModelAttribute("emailDto") EmailDto email){
         return "account/findSeller/emailFormForFindUser";
     }
 
     @PostMapping("/find/user")
-    public String infoOfSeller(@ModelAttribute("emailForm") @Valid EmailForm email, BindingResult bindingResult,
-                               Model model,@ModelAttribute("rating") Rating rating,HttpSession session){
+    public String infoOfSeller(@ModelAttribute("emailDto") @Valid EmailDto email, BindingResult bindingResult,
+                               Model model, @ModelAttribute("rating") Rating rating, HttpSession session){
         if(bindingResult.hasErrors())return "account/findSeller/emailFormForFindUser";
         try {
             userService.infoOfUser(email.getEmail(),model,session);
@@ -81,11 +80,11 @@ public class UserController {
 
 
     @GetMapping("/get/send/code")
-    public String getEmailForm(@ModelAttribute("emailForm") EmailForm email){
+    public String getEmailForm(@ModelAttribute("emailDto") EmailDto email){
         return "account/changePassword/emailFormForChangePass";
     }
     @PostMapping("/send/code")
-    public String sendCode(@ModelAttribute("emailForm") @Valid EmailForm email, BindingResult bindingResult, Model model,HttpSession session){
+    public String sendCode(@ModelAttribute("emailDto") @Valid EmailDto email, BindingResult bindingResult, Model model, HttpSession session){
         if(bindingResult.hasErrors())return "account/changePassword/emailFormForChangePass";
         try {
             userService.sendCode(email.getEmail());
@@ -112,17 +111,17 @@ public class UserController {
 
     }
     @GetMapping("/get/change/password")
-    public String getChangePass(@ModelAttribute("changePass") ChangePass changePass,HttpSession session, Model model){
+    public String getChangePass(@ModelAttribute("changePassDto") ChangePassDto changePassDto, HttpSession session, Model model){
         String email = (String) session.getAttribute("email");
         model.addAttribute("email", email);
         return "account/changePassword/changePassword";
     }
     @PostMapping("/change/password")
-    public String changePass(@ModelAttribute("changePass") @Valid ChangePass changePass, BindingResult bindingResult,Model model){
+    public String changePass(@ModelAttribute("changePassDto") @Valid ChangePassDto changePassDto, BindingResult bindingResult, Model model){
         if(bindingResult.hasErrors())return "account/changePassword/changePassword";
         try {
 
-            userService.changePass(changePass);
+            userService.changePass(changePassDto);
             return "redirect:/";
         }catch(Exception e){
             model.addAttribute("error",e.getMessage());
@@ -140,7 +139,7 @@ public class UserController {
     public String getAccountSettings(){
         return "account/settings/settings";
     }
-    @GetMapping("/send/code/without/emailForm")
+    @GetMapping("/send/code/without/emailDto")
     public String sendCodeWithoutEmailForm(HttpSession session){
         String email=GoodsService.getUserDetails().getUsername();
         userService.sendCode(email);

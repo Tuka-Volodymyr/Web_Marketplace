@@ -1,25 +1,20 @@
 package com.example.web_marketplace.controllers;
 
-import com.example.web_marketplace.entities.User;
-import com.example.web_marketplace.forms.FilterForm;
-import com.example.web_marketplace.forms.IdGoods;
-import com.example.web_marketplace.entities.Goods;
+import com.example.web_marketplace.model.dto.FilterDto;
+import com.example.web_marketplace.model.entities.Goods;
 import com.example.web_marketplace.service.GoodsService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.awt.*;
 import java.io.IOException;
-import java.io.InputStream;
 
 @Controller
 @Data
@@ -72,23 +67,23 @@ public class GoodsController {
         }
     }
     @GetMapping ("/find/goods")
-    public String findGoods(@ModelAttribute("filterForm") FilterForm filterForm,HttpSession session,Model model){
-        filterForm.setMaxPrice(999999);
+    public String findGoods(@ModelAttribute("filterDto") FilterDto filterDto, HttpSession session, Model model){
+        filterDto.setMaxPrice(999999);
         if(session.getAttribute("filter")!=null){
-            FilterForm filter=(FilterForm) session.getAttribute("filter");
-            filterForm.setCategory(filter.getCategory());
-            filterForm.setMinPrice(filter.getMinPrice());
-            filterForm.setMaxPrice(filter.getMaxPrice());
+            FilterDto filter=(FilterDto) session.getAttribute("filter");
+            filterDto.setCategory(filter.getCategory());
+            filterDto.setMinPrice(filter.getMinPrice());
+            filterDto.setMaxPrice(filter.getMaxPrice());
         }
         return "goods/foundGoods";
     }
 
     @PostMapping("get/found/goods")
-    public String getCommodityByCategory(@ModelAttribute("filterForm") FilterForm filterForm, Model model,HttpSession session){
+    public String getCommodityByCategory(@ModelAttribute("filterDto") FilterDto filterDto, Model model, HttpSession session){
         try {
-            if(filterForm.getCategory().isBlank()&&filterForm.getMaxPrice()<=filterForm.getMinPrice())
+            if(filterDto.getCategory().isBlank()&& filterDto.getMaxPrice()<= filterDto.getMinPrice())
                 return "redirect:/goods";
-            goodsService.getFoundGoodsWithFilter(model, filterForm,session);
+            goodsService.getFoundGoodsWithFilter(model, filterDto,session);
             return "goods/goods";
         }catch (Exception e){
             model.addAttribute("error",e.getMessage());

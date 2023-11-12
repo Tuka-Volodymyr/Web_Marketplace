@@ -1,12 +1,10 @@
 package com.example.web_marketplace.controller;
 
-import com.example.web_marketplace.entities.Rating;
-import com.example.web_marketplace.entities.User;
-import com.example.web_marketplace.forms.EmailForm;
-import jakarta.mail.Session;
+import com.example.web_marketplace.model.entities.Rating;
+import com.example.web_marketplace.model.entities.User;
+import com.example.web_marketplace.model.dto.EmailDto;
 import jakarta.transaction.Transactional;
 import org.junit.Test;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -16,8 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.util.TreeMap;
-
+import static org.mockito.Mockito.mock;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -26,7 +23,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @WithMockUser
 @AutoConfigureMockMvc
-
 public class UserControllerTest {
 
     @Autowired
@@ -73,11 +69,11 @@ public class UserControllerTest {
                 .idSeller(2L)
                 .lastRating(2)
                 .build();
-        EmailForm emailForm=EmailForm.builder()
+        EmailDto emailDto = EmailDto.builder()
                 .email("tuka@gmail.com")
                 .build();
         this.mockMvc.perform(post("/find/user")
-                        .flashAttr("emailForm",emailForm)
+                        .flashAttr("emailDto", emailDto)
                         .flashAttr("rating", rating))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -89,11 +85,11 @@ public class UserControllerTest {
                 .idSeller(2L)
                 .lastRating(2)
                 .build();
-        EmailForm emailForm=EmailForm.builder()
+        EmailDto emailDto = EmailDto.builder()
                 .email("ta@gmail.com")
                 .build();
         this.mockMvc.perform(post("/find/user")
-                        .flashAttr("emailForm",emailForm)
+                        .flashAttr("emailForm", emailDto)
                         .flashAttr("rating", rating))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -102,12 +98,14 @@ public class UserControllerTest {
 
 //    @Test
 //    public void evaluate_success() throws Exception {
+//        MockHttpSession mockSession = new MockHttpSession();
+//        mockSession.setAttribute("idSeller", 1L);
 //        Rating rating=Rating.builder()
-//                .idSeller(6L)
 //                .rating(new TreeMap<>())
 //                .lastRating(3)
 //                .build();
 //        this.mockMvc.perform(post("/evaluate")
+//                        .session(mockSession)
 //                        .flashAttr("rating", rating))
 //                .andDo(print())
 //                .andExpect(status().is3xxRedirection())

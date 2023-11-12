@@ -1,24 +1,24 @@
-package com.example.web_marketplace.data;
+package com.example.web_marketplace.repository.impl;
 
-import com.example.web_marketplace.entities.User;
+import com.example.web_marketplace.model.entities.User;
 import com.example.web_marketplace.exceptions.BadRequestException;
 import com.example.web_marketplace.exceptions.UserNotFoundException;
-import com.example.web_marketplace.repositories.UserRepository;
+import com.example.web_marketplace.repository.UserRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
 @Component
-public class UserData implements Data<User>{
+public class UserRepositoryImplement {
     private final UserRepository userRepository;
-    public UserData(UserRepository userRepository) {
+    public UserRepositoryImplement(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-    @Override
+
     public void save(User user) {
         userRepository.save(user);
     }
-    @Override
+
     public void delete(User user) {
         userRepository.save(user);
     }

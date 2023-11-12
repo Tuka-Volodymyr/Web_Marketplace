@@ -1,11 +1,10 @@
-package com.example.web_marketplace.repositories;
+package com.example.web_marketplace.repository;
 
-import com.example.web_marketplace.entities.Basket;
+import com.example.web_marketplace.model.entities.Basket;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface BasketRepository extends JpaRepository<Basket,Long> {
